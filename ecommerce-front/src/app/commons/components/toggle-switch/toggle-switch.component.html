@@ -1,0 +1,21 @@
+<ng-container>
+  <div class="d-flex justify-content-start gap-3 align-items-center">
+    <div class="toggle-container" [ngClass]="{ 'disabled': disabled }">
+      <label class="d-flex">
+        <input type="checkbox" name="roleStatus1" [(ngModel)]="model" (ngModelChange)="onInputChange($event)">
+        <div class="toggle">
+          <div class="circle"></div>
+        </div>
+      </label>
+    </div>
+    <div class="toggle-label">
+      @if (checkedLabel && model) {
+        {{ checkedLabel }}
+      }
+
+      @if (uncheckedLabel && !model) {
+        {{ uncheckedLabel }}
+      }
+    </div>
+  </div>
+</ng-container>

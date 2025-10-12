@@ -1,0 +1,32 @@
+<main class="w-100 vh-100" style="overflow:hidden;">
+  <div class="row h-100 ">
+    <div class="col-12 col-md-6 h-100 d-none d-md-block">
+      <app-login-banner></app-login-banner>
+    </div>
+    <div class="col-12 col-md-6 h-100 d-flex align-items-center">
+      <div class="d-flex justify-content-between flex-column gap-3 w-75 mx-auto">
+        <p class="h4">{{ 'Iniciar sesión' }}</p>
+        <p class="m-0">{{ 'Ingresa tus datos para continuar' }}</p>
+        <app-required-indicator></app-required-indicator>
+        <div class="form-group">
+          <label id="username" class="required-field">{{ 'Nombre de usuario' }}</label>
+          <app-input-with-icon
+            [(ngModel)]="authReq.username"
+            inputType="text"
+            placeholder="{{ 'Ej. usuario123' }}"
+            icon="account_circle"
+            iconPosition="left"/>
+        </div>
+        <div class="form-group">
+          <label id="password" class="required-field">{{ 'Contraseña' }}</label>
+          <app-input-for-password
+            [(ngModel)]="authReq.password"
+            placeholder="{{ 'Ingresa tu contraseña' }}"
+            iconPosition="left"/>
+        </div>
+        <span class="fw-bold text-secondary text-end recovery">{{ 'Recuperar contraseña' }}</span>
+        <button type="button" class="btn btn-primary" (click)="doLogin()">{{ 'Iniciar sesión' }}</button>
+      </div>
+    </div>
+  </div>
+</main>

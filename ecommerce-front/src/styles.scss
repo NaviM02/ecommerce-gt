@@ -1,1 +1,245 @@
 /* You can add global styles to this file, and also import other style files */
+
+// Importing ng-select default theme.
+@import "../node_modules/@ng-select/ng-select/themes/default.theme.css";
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/functions';
+
+$primary: #202C53;
+$secondary: #1F98D4;
+$success: #61AF36;
+$warning: #FFA630;
+$danger: #FF3D00;
+$info: #DEE2E6;
+
+$font-family-base: 'Roboto', sans-serif;
+
+// disable validation icons
+$enable-validation-icons: false;
+
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/maps';
+
+@import 'bootstrap/scss/root';
+@import 'bootstrap/scss/reboot';
+@import 'bootstrap/scss/type';
+@import 'bootstrap/scss/images';
+@import 'bootstrap/scss/containers';
+@import 'bootstrap/scss/grid';
+@import 'bootstrap/scss/tables';
+@import 'bootstrap/scss/forms';
+@import 'bootstrap/scss/buttons';
+@import 'bootstrap/scss/transitions';
+@import 'bootstrap/scss/dropdown';
+@import 'bootstrap/scss/button-group';
+@import 'bootstrap/scss/nav';
+@import 'bootstrap/scss/navbar';
+@import 'bootstrap/scss/card';
+@import 'bootstrap/scss/accordion';
+@import 'bootstrap/scss/breadcrumb';
+@import 'bootstrap/scss/pagination';
+@import 'bootstrap/scss/badge';
+@import 'bootstrap/scss/alert';
+@import 'bootstrap/scss/progress';
+@import 'bootstrap/scss/list-group';
+@import 'bootstrap/scss/close';
+@import 'bootstrap/scss/toasts';
+@import 'bootstrap/scss/modal';
+@import 'bootstrap/scss/tooltip';
+@import 'bootstrap/scss/popover';
+@import 'bootstrap/scss/carousel';
+@import 'bootstrap/scss/spinners';
+@import 'bootstrap/scss/offcanvas';
+@import 'bootstrap/scss/placeholders';
+@import 'bootstrap/scss/utilities';
+
+// Helpers
+@import 'bootstrap/scss/helpers';
+@import 'bootstrap/scss/utilities/api';
+
+.required-field::before {
+  color: red;
+  content: '*';
+  margin-right: 4px;
+}
+
+input.form-control:focus {
+  border-color: $primary;
+  box-shadow: 0 0 0 0.2rem rgba($primary, 0.25);
+}
+
+app-material-icon {
+  display: inline-flex;
+}
+
+// Toggle icon remove
+.dropdown-toggle {
+  &::after {
+    display: none !important;
+  }
+
+  &::before {
+    display: none !important;
+  }
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .body-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .body {
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      padding: map-get($spacers, 3);
+
+      @include media-breakpoint-up(lg) {
+        padding: map-get($spacers, 4) map-get($spacers, 5);
+      }
+
+      .table-main-container {
+        height: 100%;
+
+        .table-container {
+          //border: 1px solid #cccccc;
+          border: 1px solid $border-color;
+          height: 100%;
+          border-radius: 0.5rem;
+          overflow: auto;
+          min-height: 500px;
+          max-height: 600px;
+        }
+      }
+    }
+  }
+}
+
+// for button with icon
+.btn {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  align-items: center
+}
+
+label {
+  font-weight: 500;
+}
+
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+
+  th {
+    background-color: $gray-200;
+    color: $gray-700;
+    font-size: 14px;
+  }
+
+  tr:hover,
+  tr:hover td,
+  tr:hover td > * {
+    background-color: $gray-100 !important;
+  }
+
+  th {
+    padding: 0.5rem 0.5rem;
+  }
+
+  td {
+    padding: 0.2rem 0.5rem;
+  }
+}
+
+.sticky-header {
+  th {
+    position: sticky;
+    left: 0;
+    top: 0;
+    z-index: 100;
+
+    &:last-of-type {
+      right: 0;
+      top: 0;
+    }
+  }
+}
+
+// header container for list, form, and detail pages
+.list-page-header-container,
+.form-page-header-container,
+.detail-header-container {
+  //background-color: #f8f9fa;
+  background-color: $gray-100;
+
+  padding-left: map-get($spacers, 3);
+  padding-right: map-get($spacers, 3);
+  @include media-breakpoint-up(lg) {
+    padding-left: map-get($spacers, 5);
+    padding-right: map-get($spacers, 5);
+  }
+}
+
+// form action button container (e.g., save, cancel buttons)
+.form-actions-container {
+  margin-top: auto;
+  border-top: $border-width $border-style $border-color;
+}
+
+// show invalid feedback message when form control is invalid
+.form-control.is-invalid + app-input-invalid-feedback {
+  .invalid-feedback {
+    display: block;
+  }
+}
+
+// custom styles for ng-select component
+div.ng-select-container {
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  height: 38px !important;
+  margin: 0;
+}
+
+// custom styles for ng-select component when invalid
+ng-select.is-invalid .ng-select-container {
+  border-color: $danger;
+}
+
+ng-select.is-invalid + app-input-invalid-feedback {
+  .invalid-feedback {
+    display: block;
+  }
+}
+
+// custom styles for single date picker component when invalid
+app-single-datepicker {
+  .is-invalid {
+    // change border color of input and button to danger color
+    input.form-control {
+      border-color: $danger;
+    }
+
+    button.btn {
+      border-color: $danger;
+      color: $danger;
+    }
+
+    // show invalid feedback message
+    + app-input-invalid-feedback {
+      .invalid-feedback {
+        display: block;
+      }
+    }
+  }
+}

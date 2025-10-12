@@ -1,0 +1,7 @@
+span.recovery {
+  cursor: pointer;
+
+  &:hover {
+    color: var(--bs-primary) !important;
+  }
+}

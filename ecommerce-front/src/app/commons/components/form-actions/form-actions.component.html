@@ -1,0 +1,17 @@
+<div>
+  <div class="d-flex justify-content-between align-items-center gap-2 mt-4 mb-1">
+    <div class="d-flex justify-content-start align-items-center gap-4">
+      @if (cancelRoute) {
+        <button class="btn btn-info px-4" [routerLink]="cancelRoute">{{ cancelText }}</button>
+      }
+
+      @if (deleteAction.observed && showDelete) {
+        <button class="btn btn-outline-light text-danger fw-semibold px-4" (click)="deleteAction.emit()">{{ deleteText }}</button>
+      }
+    </div>
+
+    @if (saveAction.observed) {
+      <button class="btn btn-primary px-5" (click)="saveAction.emit()">{{ saveText }}</button>
+    }
+  </div>
+</div>

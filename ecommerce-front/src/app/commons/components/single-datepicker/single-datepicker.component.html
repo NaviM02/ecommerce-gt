@@ -1,0 +1,25 @@
+<ng-container>
+  <div
+    class="input-group single-datepicker"
+    [ngClass]="{ 'is-invalid': c.touched && (!_model || c.invalid) }"
+  >
+    <input
+      class="form-control"
+      placeholder="dd/mm/yyyy"
+      name="dp"
+      #c="ngModel"
+      [(ngModel)]="_model"
+      ngbDatepicker
+      #d="ngbDatepicker"
+      (ngModelChange)="onModelChange($event)"
+      placement="bottom-end"
+      [disabled]="disabled"
+    >
+    <button type="button" class="btn btn-outline-primary" (click)="d.toggle()">
+      <app-material-icon>calendar_month</app-material-icon>
+    </button>
+  </div>
+  @if (txtInvalidFeedback) {
+    <app-input-invalid-feedback [message]="txtInvalidFeedback"></app-input-invalid-feedback>
+  }
+</ng-container>

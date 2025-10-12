@@ -1,0 +1,54 @@
+// Toggle for tpStatus
+// ngx-ui-switch is not available for this angular version (19), yet.
+.toggle-container {
+  $toggle-height: 30px;
+  $toggle-width: 60px;
+
+  input {
+    opacity: 0;
+    width: 0;
+
+    &:checked {
+      + .toggle {
+        background-color: #eff7eb !important;
+
+        .circle {
+          background-color: var(--bs-success);
+          left: calc($toggle-width - $toggle-height);
+        }
+      }
+    }
+  }
+
+  .toggle {
+    position: relative;
+    border-radius: 100px;
+    width: $toggle-width;
+    height: $toggle-height;
+    //background-color: rgb(234, 234, 234);
+    background-color: var(--bs-info);
+
+    .circle {
+      transition: all .4s ease-in-out;
+      // left: 0;
+      position: absolute;
+      left: 7%;
+      top: 50%;
+      transform: translate(0, -50%);
+      border-radius: 100px;
+      background-color: #495057;
+      width: calc($toggle-height - 6px);
+      height: calc($toggle-height - 6px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    }
+  }
+
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+
+    + .toggle-label {
+      opacity: 0.6;
+    }
+  }
+}

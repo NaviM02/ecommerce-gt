@@ -1,0 +1,42 @@
+<div class="header-container d-flex align-items-center justify-content-between py-2 px-4 bg-primary text-white">
+  <div class="d-flex align-items-center gap-3">
+    <button type="button" class="btn btn-primary" (click)="onToggleSidebar()">
+      <app-material-icon [size]="28">menu</app-material-icon>
+    </button>
+
+    <div class="d-flex align-items-center gap-3">
+      <img src="assets/images/logo.png" alt="Logo" height="28" />
+      <h5 class="m-0 fw-bold">E-Commerce</h5>
+    </div>
+  </div>
+
+  <div ngbDropdown class="d-inline-block" placement="bottom-end">
+    <button type="button" class="btn btn-primary" ngbDropdownToggle>
+      <div class="user-info text-white align-items-center d-flex gap-2 pe-2">
+        <div class="d-none d-md-flex flex-column text-end">
+          <p class="user-name m-0 fw-semibold fs-14">{{ userName }}</p>
+          <p class="user-role text-light m-0 fs-12">{{ userRole }}</p>
+        </div>
+        <div class="avatar fw-semibold h6 m-0">
+          {{ userName[0]  }}
+        </div>
+        <app-material-icon class="d-none d-md-block">expand_more</app-material-icon>
+      </div>
+    </button>
+
+    <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end">
+      <button ngbDropdownItem (click)="goToProfile()">
+        <div class="d-flex gap-2 justify-content-start py-2">
+          <app-material-icon>account_circle</app-material-icon>
+          <span>Mi perfil</span>
+        </div>
+      </button>
+      <button ngbDropdownItem (click)="logout()">
+        <div class="d-flex gap-2 justify-content-start py-2">
+          <app-material-icon>logout</app-material-icon>
+          <span>Cerrar sesión</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

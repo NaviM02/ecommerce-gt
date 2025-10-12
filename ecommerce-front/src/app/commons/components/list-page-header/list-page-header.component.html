@@ -1,0 +1,22 @@
+<div
+  class="d-flex justify-content-between align-items-start py-4">
+  <div>
+    @if (title) {
+      <h1 class="fw-bold h4 m-0">{{ title }}</h1>
+    }
+
+    @if (description) {
+      <p class="m-0 mt-1 fw-light">{{ description }}</p>
+    }
+  </div>
+  <div>
+    @if (saveRoute) {
+      <button class="btn btn-primary" [routerLink]="saveRoute">
+        @if (saveText) {
+          <span class="fw-semibold">{{ saveText }}</span>
+        }
+        <app-material-icon>add</app-material-icon>
+      </button>
+    }
+  </div>
+</div>

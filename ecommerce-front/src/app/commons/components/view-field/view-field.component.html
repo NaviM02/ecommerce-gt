@@ -1,0 +1,16 @@
+<ng-container>
+  <div>
+    <label class="form-label">{{ labelText }}</label>
+    @if (textValue) {
+      <p>{{ textValue }}</p>
+    } @else if (switchValue) {
+      <app-toggle-switch
+        [checked]="switchValue"
+        [disabled]="true"
+      >
+      </app-toggle-switch>
+    } @else {
+      <p class="text-muted fst-italic">{{ 'Sin información' }}</p>
+    }
+  </div>
+</ng-container>

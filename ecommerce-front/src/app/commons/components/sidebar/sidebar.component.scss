@@ -1,0 +1,35 @@
+.side-bar {
+  position: relative;
+  background-color: white;
+  height: 100%;
+  left: 0;
+  top: 0;
+  transition: .6s;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  width: 0;
+  z-index: 100;
+
+  .menu-item {
+    cursor: pointer;
+    color: var(--bs-primary);
+    font-weight: 500;
+
+    &:hover {
+      color: var(--bs-secondary);
+    }
+
+    &.active {
+      color: var(--bs-secondary);
+    }
+  }
+
+  &:hover {
+    width: 20rem;
+    overflow-y: auto;
+  }
+
+  &.active {
+    width: 20rem;
+  }
+}

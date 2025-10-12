@@ -1,0 +1,46 @@
+<ng-container>
+  @if (show) {
+    <div
+      ngbDropdown
+      class="d-inline-block"
+      placement="bottom-right"
+      container="body"
+    >
+      <!-- toggle here -->
+      <button type="button" class="btn text-primary btn-action" ngbDropdownToggle>
+        <app-material-icon [size]="20">more_vert</app-material-icon>
+      </button>
+
+      <!-- menu here -->
+      <div ngbDropdownMenu class="dropdown-menu">
+        @if (viewRoute) {
+          <button
+            ngbDropdownItem
+            [routerLink]="viewRoute"
+          >
+            {{ 'Ver' }}
+          </button>
+        }
+
+        @if (editRoute) {
+          <button
+            ngbDropdownItem
+            [routerLink]="editRoute"
+          >
+            {{ 'Editar' }}
+          </button>
+        }
+
+        @if (deleteAction.observed) {
+          <button
+            class="text-danger"
+            ngbDropdownItem
+            (click)="deleteAction.emit()"
+          >
+            {{ 'Eliminar' }}
+          </button>
+        }
+      </div>
+    </div>
+  }
+</ng-container>

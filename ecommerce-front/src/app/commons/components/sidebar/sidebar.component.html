@@ -1,0 +1,10 @@
+<div class="side-bar pt-4" [ngClass]="{ 'active': active }">
+  @for (item of items; track item.label) {
+    <div class="d-flex align-items-center gap-2 px-2 py-1 mt-2 menu-item" [routerLink]="item.route" routerLinkActive="active">
+      @if(item.icon) {
+        <app-material-icon>{{ item.icon }}</app-material-icon>
+      }
+      <p class="m-0 item-name">{{ item.label }}</p>
+    </div>
+  }
+</div>
