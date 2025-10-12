@@ -3,10 +3,11 @@ package com.navi.ecommerceapi.controller;
 import com.navi.ecommerceapi.model.User;
 import com.navi.ecommerceapi.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -16,33 +17,34 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<User> getUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> findAll() {
+        return ResponseEntity.ok(userService.findAll());
     }
 
     @GetMapping("/{id}")
-    public Optional<User> getUser(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public ResponseEntity<User> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.findById(id));
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.saveUser(user);
+    public ResponseEntity<User> create(@RequestBody User user) {
+        User createdUser = userService.save(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user) {
-        user.setUserId(id);
-        return userService.saveUser(user);
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
+        return ResponseEntity.ok(userService.update(id, user));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/role/{roleId}")
-    public List<User> getUsersByRole(@PathVariable Long roleId) {
-        return userService.getUsersByRole(roleId);
+    public ResponseEntity<List<User>> getUsersByRole(@PathVariable Long roleId) {
+        return ResponseEntity.ok(userService.findUsersByRole(roleId));
     }
 }

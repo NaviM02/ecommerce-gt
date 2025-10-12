@@ -1,5 +1,6 @@
 package com.navi.ecommerceapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,8 +22,6 @@ public class Role {
     private String roleName;
 
     @OneToMany(mappedBy = "role")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @JsonManagedReference
+    @JsonBackReference
     private List<User> users;
 }

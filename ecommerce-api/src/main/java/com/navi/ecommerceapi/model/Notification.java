@@ -15,7 +15,7 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long notificationId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -24,9 +24,7 @@ public class Notification {
 
     private String type;
 
-    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Builder.Default
     private Boolean wasSent = false;
 }

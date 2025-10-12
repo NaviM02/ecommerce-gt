@@ -11,25 +11,26 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class Sanction {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sanctionId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "moderator_id")
     private User moderator;
 
     @Column(nullable = false)
     private String reason;
 
-    @Builder.Default
     private LocalDateTime startDate = LocalDateTime.now();
 
     private LocalDateTime endDate;
 
+    @Column(length = 20)
     private String status;
 }

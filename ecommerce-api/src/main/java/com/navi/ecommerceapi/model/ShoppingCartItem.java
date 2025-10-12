@@ -14,11 +14,11 @@ public class ShoppingCartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartItemId;
 
-    @ManyToOne
-    @JoinColumn(name = "cart_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id")
     private ShoppingCart cart;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 

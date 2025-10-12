@@ -15,18 +15,18 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ratingId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(nullable = false)
     private Integer stars;
 
     private String comment;
 
-    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 }

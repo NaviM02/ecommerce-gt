@@ -1,10 +1,9 @@
 package com.navi.ecommerceapi.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "\"user\"")
@@ -13,16 +12,15 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
     @Column(nullable = false)
-    private String firstName;
+    private String fullName;
 
     @Column(nullable = false)
-    private String lastName;
+    private String username;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -33,54 +31,13 @@ public class User {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    @JsonBackReference
+    @JoinColumn(name = "role_id")
+    @JsonManagedReference
     private Role role;
+
+    @Column(nullable = false)
+    private Boolean active = true;
 
     @Builder.Default
     private LocalDateTime registrationDate = LocalDateTime.now();
-
-    @Builder.Default
-    private Boolean active = true;
-
-    // Relaciones
-    @OneToMany(mappedBy = "seller")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<Product> products;
-
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<ShoppingCart> carts;
-
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<Order> orders;
-
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<PaymentMethod> paymentMethods;
-
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<Rating> ratings;
-
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<Sanction> sanctions;
-
-    @OneToMany(mappedBy = "moderator")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<Sanction> sanctionsGiven;
-
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<Notification> notifications;
 }

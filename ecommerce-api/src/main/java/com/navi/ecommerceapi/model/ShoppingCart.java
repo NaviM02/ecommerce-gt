@@ -16,15 +16,12 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ShoppingCartItem> items;
 }

@@ -2,6 +2,8 @@ package com.navi.ecommerceapi.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,8 +18,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
 
-    @ManyToOne
-    @JoinColumn(name = "seller_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seller_id")
     private User seller;
 
     @Column(nullable = false)
@@ -28,36 +30,23 @@ public class Product {
     private String imageUrl;
 
     @Column(nullable = false)
-    private Double price;
+    private BigDecimal price;
 
     @Column(nullable = false)
     private Integer stock;
 
-    @Column
+    @Column(length = 20)
     private String condition;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @Builder.Default
+    @Column(length = 20)
     private String status = "PENDIENTE";
 
-    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "product")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<OrderDetail> orderDetails;
-
-    @OneToMany(mappedBy = "product")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<ShoppingCartItem> cartItems;
-
-    @OneToMany(mappedBy = "product")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Rating> ratings;
 }

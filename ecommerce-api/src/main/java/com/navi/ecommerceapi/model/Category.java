@@ -18,8 +18,6 @@ public class Category {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "category")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Product> products;
 }

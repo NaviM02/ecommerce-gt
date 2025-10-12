@@ -2,6 +2,8 @@ package com.navi.ecommerceapi.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,20 +18,17 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @Builder.Default
     private LocalDateTime orderDate = LocalDateTime.now();
 
-    @Column(nullable = false)
+    @Column(length = 20, nullable = false)
     private String status;
 
-    private LocalDateTime deliveryDate;
+    private LocalDate deliveryDate;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<OrderDetail> details;
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<OrderDetail> orderDetails;
 }

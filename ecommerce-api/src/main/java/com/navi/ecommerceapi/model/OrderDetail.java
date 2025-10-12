@@ -3,6 +3,8 @@ package com.navi.ecommerceapi.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "order_detail")
 @Data
@@ -14,11 +16,11 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderDetailId;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
@@ -26,5 +28,5 @@ public class OrderDetail {
     private Integer quantity;
 
     @Column(nullable = false)
-    private Double price;
+    private BigDecimal price;
 }

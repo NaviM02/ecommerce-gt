@@ -15,7 +15,7 @@ public class PaymentMethod {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -28,6 +28,5 @@ public class PaymentMethod {
     @Column(nullable = false)
     private LocalDate expirationDate;
 
-    @Builder.Default
     private Boolean isActive = true;
 }
