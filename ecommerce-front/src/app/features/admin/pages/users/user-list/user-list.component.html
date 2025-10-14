@@ -1,0 +1,49 @@
+<div class="main-container">
+  <div class="body-container">
+    <div class="list-page-header-container">
+      <app-list-page-header
+        title="Usuarios"
+        description="Usuarios que estan registrados en la aplicación"
+        [saveRoute]="['/admin/users/add']"
+        saveText="Crear Usuario"
+      >
+      </app-list-page-header>
+    </div>
+
+    <div class="body bg-white h-100">
+      <div class="table-main-container d-flex flex-column gap-3 h-60">
+        <div class="table-actions"></div>
+
+        <div class="table-container">
+          <table class="table sticky-header sticky-actions">
+            <tr>
+              <th class="th-email">{{ 'Usuario' }}</th>
+              <th class="th-name">{{ 'Nombre' }}</th>
+              <th class="th-forms">{{ 'Email' }}</th>
+              <th class="th-actions text-center">{{ 'Acciones' }}</th>
+            </tr>
+
+            @for (user of users; track user.userId) {
+              <tr>
+                <td>
+                  <div class="text-secondary fw-bold">{{ user.username }}</div>
+                </td>
+                <td>{{ user.fullName }}</td>
+                <td>{{ user.email }}</td>
+                <td class="text-center">
+                  <app-table-row-action
+                    [viewRoute]="['/admin/users', user.userId]"
+                    [editRoute]="['/admin/users/edit', user.userId]"
+                    (deleteAction)="delete(user.userId)"
+                  >
+                  </app-table-row-action>
+                </td>
+              </tr>
+            }
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

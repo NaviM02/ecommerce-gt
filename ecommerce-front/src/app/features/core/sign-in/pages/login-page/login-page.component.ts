@@ -45,8 +45,8 @@ export class LoginPageComponent {
         void this.router.navigate(['dashboard']);
       },
       error: (e: HttpErrorResponse) => {
-        if (e.error == 'wrong_credentials') return this.toastService.error('Usuario o contraseña incorrectos');
-        if (e.error == 'inactive_user') return this.toastService.error('Usuario inactivo');
+        if (e.error.error == 'wrong_credentials') return this.toastService.error('Usuario o contraseña incorrectos');
+        if (e.error.error == 'inactive_user') return this.toastService.error('Usuario inactivo');
         this.toastService.error('Error en el servidor, intenta más tarde');
       }
     });

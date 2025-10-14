@@ -1,3 +1,4 @@
+(globalThis as any).$localize = (s: TemplateStringsArray, ...args: any[]) => s.join('');
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';

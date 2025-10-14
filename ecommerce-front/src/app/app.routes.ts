@@ -19,11 +19,11 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./features/dashboard/dashboard.routes').then(r => r.dashboardRoutes)
-      }/*,
+      },
       {
-        path: 'security',
-        //loadChildren: () => import('./features/security/security.routes').then(r => r.  securityRoutes)
-      }*/
+        path: 'admin',
+        loadChildren: () => import('./features/admin/admin.routes').then(r => r.  adminRoutes)
+      }
     ]
   }
 ];

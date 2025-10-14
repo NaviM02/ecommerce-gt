@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { MaterialIconComponent } from '../material-icon/material-icon.component';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../../services/core/auth.service';
+import { RoleEnum } from '../../../models/role.enum';
 
 interface MenuItem {
   label: string;
@@ -11,46 +13,47 @@ interface MenuItem {
 
 @Component({
   selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
   imports: [
     NgClass,
     MaterialIconComponent,
     RouterLink
   ],
+  templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
 
   @Input() active: boolean = false;
-  userRole: string = 'Común';
-
   items: MenuItem[] = [];
 
+  constructor(private authService: AuthService) {}
+
   ngOnInit(): void {
-    this.items = this.getMenuByRole(this.userRole);
+    const role = this.authService.getUserRole();
+    this.items = this.getMenuByRole(role);
   }
 
-  private getMenuByRole(role: string): MenuItem[] {
+  private getMenuByRole(role: number | null): MenuItem[] {
     switch(role) {
-      case 'Común':
+      case RoleEnum.COMMON:
         return [
-          { label: 'Mis Ventas', route: '/mis-ventas', icon: 'sell' },
-          { label: 'Comprar', route: '/comprar', icon: 'shopping_cart' },
+          { label: 'Mis Ventas', route: 'user/mis-ventas', icon: 'sell' },
+          { label: 'Comprar', route: 'user/comprar', icon: 'shopping_cart' },
         ];
-      case 'Moderador':
+      case RoleEnum.MODERATOR:
         return [
-          { label: 'Revisar Productos', route: '/revisar-productos', icon: 'check_circle' },
-          { label: 'Reportes Moderación', route: '/reportes-moderacion', icon: 'assessment' },
+          { label: 'Revisar Productos', route: 'moderator/revisar-productos', icon: 'check_circle' },
+          { label: 'Reportes Moderación', route: 'moderator/reportes-moderacion', icon: 'assessment' },
         ];
-      case 'Logística':
+      case RoleEnum.LOGISTICS:
         return [
-          { label: 'Control Paquetes', route: '/control-paquetes', icon: 'local_shipping' },
-          { label: 'Historial Entregas', route: '/historial-entregas', icon: 'history' },
+          { label: 'Control Paquetes', route: 'logistics/control-paquetes', icon: 'local_shipping' },
+          { label: 'Historial Entregas', route: 'logistics/historial-entregas', icon: 'history' },
         ];
-      case 'Administrador':
+      case RoleEnum.ADMINISTRATOR:
         return [
-          { label: 'Registrar Usuarios', route: '/registrar-usuarios', icon: 'person_add' },
-          { label: 'Generar Reportes', route: '/reportes', icon: 'bar_chart' },
+          { label: 'Usuarios', route: 'admin/users', icon: 'person_add' },
+          { label: 'Generar Reportes', route: 'admin/reports', icon: 'bar_chart' },
         ];
       default:
         return [];

@@ -16,19 +16,19 @@ class Toast {
   }
 
   public static Success(message: string, delay: number = 5000) {
-    return new Toast('check_circle', 'txt_success', 'toast success-toast', message, delay);
+    return new Toast('check_circle', 'Éxito', 'toast success-toast', message, delay);
   }
 
   public static Error(message: string, delay: number = 5000) {
-    return new Toast('error', 'txt_error', 'toast error-toast', message, delay);
+    return new Toast('error', 'Error', 'toast error-toast', message, delay);
   }
 
   public static Info(message: string, delay: number = 5000) {
-    return new Toast('info', 'txt_info', 'toast info-toast', message, delay);
+    return new Toast('info', 'Información', 'toast info-toast', message, delay);
   }
 
   public static Warning(message: string, delay: number = 5000) {
-    return new Toast('warning', 'txt_warning', 'toast warning-toast', message, delay);
+    return new Toast('warning', 'Advertencia', 'toast warning-toast', message, delay);
   }
 }
 
