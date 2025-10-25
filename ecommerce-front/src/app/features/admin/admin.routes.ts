@@ -20,6 +20,17 @@ export const adminRoutes: Routes = [
             path: ':id', loadComponent: () => import('./pages/users/user-detail/user-detail.component').then(c => c.UserDetailComponent)
           },
         ]
+      },
+      {
+        path: 'reports',
+        children: [
+          {
+            path: '', loadComponent: () => import('./pages/reports/report-list/report-list.component').then(c => c.ReportListComponent)
+          },
+          {
+            path: ':id', loadComponent: () => import('./pages/users/user-detail/user-detail.component').then(c => c.UserDetailComponent)
+          },
+        ]
       }
     ]
   }

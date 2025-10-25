@@ -1,0 +1,93 @@
+<div class="container py-4">
+  <div class="row g-4">
+    <div class="col-md-5 text-center" style="min-width: 400px; max-width: 400px; text-align:center;">
+      @if(imagePreviewUrl) {
+        <img [src]="imagePreviewUrl" class="img-fluid rounded border" alt="Imagen del producto" />
+      }
+    </div>
+
+    <div class="col-md-7">
+      <h2 class="fw-semibold">{{ product.name }}</h2>
+      <p class="text-muted mb-1">{{ product.description }}</p>
+
+      <div class="d-flex align-items-center mb-2">
+        @if(product.ratings?.length) {
+          @for(_ of getStars(Math.round(getAverageRating())); track _) {
+            <i class="fa fa-star text-warning me-1"></i>
+          }
+          @for(_ of getEmptyStars(Math.round(getAverageRating())); track _) {
+            <i class="fa-regular fa-star text-warning me-1"></i>
+          }
+          <span class="ms-2 fw-semibold">{{ getAverageRating() }}/5</span>
+        } @else {
+          <span class="text-muted">Sin calificaciones aún</span>
+        }
+      </div>
+
+      <h4 class="text-success fw-bold mt-2">{{ product.price }} GTQ</h4>
+      <p class="mb-1"><strong>Condición:</strong> {{ product.condition === 1 ? 'Nuevo' : 'Usado' }}</p>
+      <p class="mb-1"><strong>Stock:</strong> {{ product.stock }}</p>
+      <p class="mb-1"><strong>Vendedor:</strong> {{ product.sellerName }}</p>
+
+      <div class="mt-3">
+        <strong>Categorías:</strong>
+        @if(product.categories?.length) {
+          @for(cat of product.categories; track cat.categoryId) {
+            <span class="badge bg-primary-subtle text-primary border mx-1">{{ cat.name }}</span>
+          }
+        } @else {
+          <span class="text-muted">No hay categorías asignadas</span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-4" />
+
+  <div class="ratings mt-4">
+    <h5 class="fw-semibold mb-3">Opiniones de compradores</h5>
+
+    @if(product.ratings?.length) {
+      @for(r of product.ratings; track r.ratingId) {
+        <div class="border rounded p-3 mb-3 bg-light">
+          <div class="d-flex align-items-center mb-2">
+            @for(_ of getStars(r.stars) ; track _) {
+              <i class="fa fa-star text-warning me-1"></i>
+            }
+            @for(_ of getEmptyStars(r.stars) ; track _) {
+              <i class="fa-regular fa-star text-warning me-1"></i>
+            }
+            <span class="ms-2 fw-bold">{{ r.username }}</span>
+          </div>
+          <p class="mb-0">{{ r.comment }}</p>
+          <small class="text-muted">{{ r.createdAt | date:'mediumDate' }}</small>
+        </div>
+      }
+    } @else {
+      <p class="text-muted">Aún no hay comentarios para este producto.</p>
+    }
+  </div>
+
+  <hr class="my-4" />
+
+  <div class="add-rating mt-4">
+    <h5 class="fw-semibold mb-3">Agrega tu opinión</h5>
+
+    <div class="mb-2">
+      @for(i of [1,2,3,4,5]; track i) {
+        <span class="me-2" style="cursor: pointer;" (click)="newRating.stars = i">
+          <i
+            [ngClass]="newRating.stars >= i ? 'fa-solid fa-star text-warning' : 'fa-regular fa-star text-warning'"
+          ></i>
+    </span>
+      }
+    </div>
+
+    <textarea class="form-control mb-2" rows="3" placeholder="Escribe un comentario (opcional)..." [(ngModel)]="newRating.comment"></textarea>
+
+    <button class="btn btn-primary" (click)="addRating()" [disabled]="submitting">
+      {{ submitting ? 'Enviando...' : 'Enviar calificación' }}
+    </button>
+  </div>
+
+</div>

@@ -1,1 +1,131 @@
-<p>user-form works!</p>
+<div class="main-container">
+  <div class="body-container">
+    <div class="form-page-header-container">
+      <app-form-page-header
+        [title]="id ? 'Editar Usuario' : 'Nuevo Usuario'"
+        [description]="id ? 'Modifica la información del usuario' : 'Crea un nuevo usuario'"
+        [backRoute]="['/admin/users']">
+      </app-form-page-header>
+    </div>
+
+    <div class="body bg-white h-100">
+      <app-required-indicator></app-required-indicator>
+
+      <div class="row">
+        <div class="col-12 col-lg-6 mb-3">
+          <label class="form-label required-field">Estado</label>
+          <app-toggle-switch [(model)]="userStatus"></app-toggle-switch>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-lg-6 mb-3">
+          <label for="fullName" class="form-label required-field">Nombre completo</label>
+          <input
+            type="text"
+            class="form-control"
+            id="fullName"
+            [(ngModel)]="user.fullName"
+            placeholder="Ej. Administrador"
+            [maxLength]="75"
+            #fullName="ngModel"
+            [ngClass]="{ 'is-invalid': fullName.touched && !(user.fullName && user.fullName.trim()) }"
+          />
+          <app-input-invalid-feedback></app-input-invalid-feedback>
+        </div>
+
+        <div class="col-12 col-lg-6 mb-3">
+          <label for="username" class="form-label required-field">Usuario</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            [(ngModel)]="user.username"
+            placeholder="Ej. admin"
+            [maxLength]="250"
+            #username="ngModel"
+            [ngClass]="{ 'is-invalid': username.touched && !(user.username && user.username.trim()) }"
+          />
+          <app-input-invalid-feedback></app-input-invalid-feedback>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-lg-6 mb-3">
+          <label for="email" class="form-label required-field">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            [(ngModel)]="user.email"
+            placeholder="Ej. direccion@correo.com"
+            [maxLength]="75"
+            #email="ngModel"
+            [ngClass]="{ 'is-invalid': email.touched && !(user.email && user.email.trim()) }"
+          />
+          <app-input-invalid-feedback></app-input-invalid-feedback>
+        </div>
+
+        <div class="col-12 col-lg-6 mb-3">
+          <label for="phoneNumber" class="form-label required-field">Teléfono</label>
+          <input
+            type="text"
+            class="form-control"
+            id="phoneNumber"
+            [(ngModel)]="user.phone"
+            placeholder="Ej. 52532524"
+            [maxLength]="250"
+            #phoneNumber="ngModel"
+            [ngClass]="{ 'is-invalid': phoneNumber.touched && !(user.phone && user.phone.trim()) }"
+          />
+          <app-input-invalid-feedback></app-input-invalid-feedback>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-lg-6 mb-3">
+          <label class="form-label required-field">Rol</label>
+          <ng-select
+            placeholder="Selecciona un rol"
+            [(ngModel)]="selectedRole"
+            id="roleSelect"
+            name="roleSelect"
+            [multiple]="false"
+            [clearable]="true"
+            #role="ngModel"
+            [ngClass]="{ 'is-invalid': role.touched && !selectedRole }"
+          >
+            @for (role of roles; track role.roleId) {
+              <ng-option [value]="role">{{ role.roleName }}</ng-option>
+            }
+          </ng-select>
+          <app-input-invalid-feedback></app-input-invalid-feedback>
+        </div>
+
+        @if (!id){
+          <div class="col-12 col-lg-6 mb-3">
+            <label class="form-label required-field">Contraseña</label>
+            <app-input-for-password
+              [(ngModel)]="user.password"
+              placeholder="Ingresa tu contraseña"
+              iconPosition="left"
+            />
+          </div>
+        }
+      </div>
+
+      <div class="form-actions-container">
+        <app-form-actions
+          [cancelRoute]="['/admin', 'users']"
+          (saveAction)="onSave()"
+          [saveText]="id ? 'Guardar' : 'Crear'"
+          [showDelete]="!!id"
+          (deleteAction)="onDelete()"
+        >
+        </app-form-actions>
+      </div>
+
+    </div>
+  </div>
+</div>
+

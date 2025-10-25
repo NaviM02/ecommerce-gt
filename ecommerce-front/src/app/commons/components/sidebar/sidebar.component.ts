@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { MaterialIconComponent } from '../material-icon/material-icon.component';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../services/core/auth.service';
 import { RoleEnum } from '../../../models/role.enum';
 
@@ -16,7 +16,8 @@ interface MenuItem {
   imports: [
     NgClass,
     MaterialIconComponent,
-    RouterLink
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
@@ -37,8 +38,10 @@ export class SidebarComponent implements OnInit {
     switch(role) {
       case RoleEnum.COMMON:
         return [
-          { label: 'Mis Ventas', route: 'user/mis-ventas', icon: 'sell' },
-          { label: 'Comprar', route: 'user/comprar', icon: 'shopping_cart' },
+          { label: 'Mis Ventas', route: 'user/my-products', icon: 'sell' },
+          { label: 'Comprar', route: 'user/products', icon: 'shopping_cart' },
+          { label: 'Mi Carrito', route: 'user/cart', icon: 'shopping_basket' },
+          { label: 'Mis Pedidos', route: 'user/orders', icon: 'local_shipping' },
         ];
       case RoleEnum.MODERATOR:
         return [

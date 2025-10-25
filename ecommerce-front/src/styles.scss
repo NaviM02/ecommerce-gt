@@ -59,6 +59,9 @@ $enable-validation-icons: false;
 @import 'bootstrap/scss/helpers';
 @import 'bootstrap/scss/utilities/api';
 
+@import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
+
+
 .required-field::before {
   color: red;
   content: '*';
@@ -153,11 +156,15 @@ label {
   }
 
   th {
-    padding: 0.5rem 0.5rem;
+    padding: 0.7rem 0.5rem;
   }
 
   td {
-    padding: 0.2rem 0.5rem;
+    padding: 0.5rem 0.5rem;
+
+    > * {
+      padding: 0;
+    }
   }
 }
 

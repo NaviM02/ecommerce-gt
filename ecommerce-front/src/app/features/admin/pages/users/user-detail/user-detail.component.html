@@ -1,1 +1,68 @@
-<p>user-detail works!</p>
+<div class="main-container">
+  <div class="body-container">
+    <div class="detail-header-container">
+      <app-detail-page-header
+        [backRoute]="['/admin', 'users']"
+        description="Usuarios que estan registrados en la aplicación"
+        [itemName]="user ? user.fullName : ''"
+        (deleteAction)="onDelete()"
+        [editRoute]="['/admin/users/edit', id]"
+      >
+      </app-detail-page-header>
+    </div>
+
+    <div class="body bg-white w-100">
+      <div class="row">
+        <app-view-field
+          class="col-12 col-lg-6 mb-3"
+          labelText="Estado"
+          [switchValue]="userStatus"
+        >
+        </app-view-field>
+      </div>
+
+      <div class="row">
+        <app-view-field
+          class="col-12 col-lg-6 mb-3"
+          labelText="Nombre completo"
+          [textValue]="user.fullName"
+        >
+        </app-view-field>
+
+        <app-view-field
+          class="col-12 col-lg-6 mb-3"
+          labelText="Usuario"
+          [textValue]="user.username"
+        >
+        </app-view-field>
+      </div>
+
+      <div class="row">
+        <app-view-field
+          class="col-12 col-lg-6 mb-3"
+          labelText="Email"
+          [textValue]="user.email"
+        >
+        </app-view-field>
+
+        <app-view-field
+          class="col-12 col-lg-6 mb-3"
+          labelText="Teléfono"
+          [textValue]="user.phone"
+        >
+        </app-view-field>
+      </div>
+
+      <div class="row">
+        <app-view-field
+          class="col-12 col-lg-6 mb-3"
+          labelText="Rol"
+          [textValue]= "user.role.roleName"
+        >
+        </app-view-field>
+      </div>
+
+    </div>
+  </div>
+</div>
+

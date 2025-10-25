@@ -1,0 +1,110 @@
+<div class="main-container">
+  <div class="body-container">
+    <div class="form-page-header-container">
+      <app-form-page-header
+        [title]="id ? 'Editar Producto' : 'Nuevo Producto'"
+        [description]="id ? 'Modifica la información del producto' : 'Crea un nuevo producto'"
+        [backRoute]="['/user/my-products']">
+      </app-form-page-header>
+    </div>
+
+    <div class="body bg-white h-100">
+      <app-required-indicator></app-required-indicator>
+
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <label class="form-label required-field">Nombre</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="product.name"
+            placeholder="Nombre del producto"
+            #productName="ngModel"
+            [ngClass]="{ 'is-invalid': productName.touched && !product.name }"
+          />
+          <app-input-invalid-feedback></app-input-invalid-feedback>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <label class="form-label required-field">Categorías</label>
+          <ng-select
+            [(ngModel)]="selectedCategories"
+            [multiple]="true"
+            placeholder="Selecciona categorías"
+            [compareWith]="compareCategories"
+            #productCategories="ngModel"
+            [ngClass]="{ 'is-invalid': productCategories.touched && !selectedCategories }"
+          >
+            @for (cat of categories; track cat.categoryId) {
+              <ng-option [value]="cat">{{ cat.name }}</ng-option>
+            }
+          </ng-select>
+          <app-input-invalid-feedback></app-input-invalid-feedback>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <label for="description" class="form-label required-field">Descripción</label>
+          <textarea
+            id="description"
+            class="form-control"
+            rows="3"
+            [(ngModel)]="product.description"
+            placeholder="Describe el producto"
+            #description="ngModel"
+            [ngClass]="{ 'is-invalid': description.touched && !(product.description && product.description.trim()) }"
+          ></textarea>
+          <app-input-invalid-feedback></app-input-invalid-feedback>
+        </div>
+      </div>
+
+      <div class="row ">
+        <div class="col-12 col-lg-4">
+          <label class="form-label required-field">Precio</label>
+          <input type="number" class="form-control" [(ngModel)]="product.price" placeholder="0.00"/>
+        </div>
+
+        <div class="col-12 col-lg-4">
+          <label class="form-label required-field">Stock</label>
+          <input type="number" class="form-control" [(ngModel)]="product.stock" placeholder="0"/>
+        </div>
+
+        <div class="col-12 col-lg-4">
+          <label for="condition" class="form-label required-field">Condición</label>
+          <ng-select
+            bindLabel="condition"
+            placeholder="Condicion del producto"
+            [(ngModel)]="product.condition"
+            #condition="ngModel"
+            [ngClass]="{ 'is-invalid': condition.touched && !product.condition }"
+          >
+            <ng-option [value]="ProductCondition.NEW">Nuevo</ng-option>
+            <ng-option [value]="ProductCondition.USED">Usado</ng-option>
+          </ng-select>
+          <app-input-invalid-feedback></app-input-invalid-feedback>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <label class="form-label required-field">Imagen</label>
+          <input type="file" (change)="onImageSelected($event)" class="form-control"/>
+          @if (imagePreviewUrl) {
+            <div class="mt-2">
+              <img [src]="imagePreviewUrl" class="img-thumbnail" style="max-width:150px" alt="imagen :C"/>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="form-actions-container">
+        <app-form-actions
+          [cancelRoute]="['/user', 'my-products']"
+          (saveAction)="onSave()"
+          [saveText]="id ? 'Guardar' : 'Crear'">
+        </app-form-actions>
+      </div>
+    </div>
+  </div>
+</div>

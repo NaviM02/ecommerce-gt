@@ -1,0 +1,61 @@
+<div class="main-container">
+  <div class="body-container">
+    <div class="list-page-header-container">
+      <app-list-page-header
+        title="Productos"
+        description="Productos que has creado"
+        [saveRoute]="['/user/my-products/add']"
+        saveText="Crear Producto"
+      >
+      </app-list-page-header>
+    </div>
+
+    <div class="body bg-white h-100">
+      <div class="table-main-container d-flex flex-column gap-3 h-60">
+        <div class="table-actions"></div>
+
+        <div class="table-container">
+          <table class="table sticky-header sticky-actions">
+            <tr>
+              <th class="th-image">{{ 'Imagen' }}</th>
+              <th class="th-name">{{ 'Nombre' }}</th>
+              <th class="th-price">{{ 'Precio' }}</th>
+              <th class="th-stock">{{ 'Stock' }}</th>
+              <th class="th-status">{{ 'Rating' }}</th>
+              <th class="th-status">{{ 'Estado' }}</th>
+              <th class="th-actions text-center">{{ 'Acciones' }}</th>
+            </tr>
+
+            @for (product of products; track product.productId) {
+              <tr>
+                <td>
+                  <img
+                    [src]="product.imageUrl ? environment.imagesUrl + product.imageUrl : '/assets/placeholder.png'"
+                    alt="{{ product.name }}"
+                    width="60"
+                    class="rounded"
+                  />
+                </td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.stock }}</td>
+                <td>{{ product.averageRating }}</td>
+                <td>
+                  <app-status-product-badge [status]="product.status" ></app-status-product-badge>
+                </td>
+                <td class="text-center">
+                  <app-table-row-action
+                    [viewRoute]="['/user/my-products', product.productId]"
+                    [editRoute]="['/user/my-products/edit', product.productId]"
+                    (deleteAction)="delete(product.productId)"
+                  >
+                  </app-table-row-action>
+                </td>
+              </tr>
+            }
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

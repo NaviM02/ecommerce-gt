@@ -23,6 +23,18 @@ export const routes: Routes = [
       {
         path: 'admin',
         loadChildren: () => import('./features/admin/admin.routes').then(r => r.  adminRoutes)
+      },
+      {
+        path: 'user',
+        loadChildren: () => import('./features/common/common.routes').then(r => r.commonRoutes)
+      },
+      {
+        path: 'moderator',
+        loadChildren: () => import('./features/moderator/moderator.routes').then(r => r.moderatorRoutes)
+      },
+      {
+        path: 'logistic',
+        loadChildren: () => import('./features/logistic/logistic.routes').then(r => r.logisticRoutes)
       }
     ]
   }

@@ -1,0 +1,80 @@
+<div class="main-container">
+  <div class="body-container">
+    <div class="detail-header-container">
+      <app-detail-page-header
+        [backRoute]="['/user', 'my-products']"
+        [description]="'Detalle del producto'"
+        [itemName]="product? product.name : ''"
+        (deleteAction)="onDelete()"
+        [editRoute]="['/user', 'my-products', 'edit', id]"
+      >
+      </app-detail-page-header>
+    </div>
+
+    <div class="body bg-white w-100 p-4 rounded ">
+      <div class="d-flex flex-wrap align-items-start gap-4">
+        <div class="flex-shrink-0" style="min-width: 250px; max-width: 250px; text-align:center;">
+          @if (product?.imageUrl) {
+            <img [src]="imagePreviewUrl" class="img-fluid rounded border" alt="Imagen del producto"/>
+          }
+        </div>
+
+        <div class="flex-grow-1">
+          <div class="row">
+            <app-view-field
+              class="col-12 col-md-6 mb-3"
+              labelText="Nombre"
+              [textValue]="product?.name"
+            ></app-view-field>
+
+            <app-view-field
+              class="col-12 col-md-6 mb-3"
+              labelText="Condición"
+              [textValue]="product?.condition === ProductCondition.NEW ? 'Nuevo' : 'Usado'"
+            ></app-view-field>
+          </div>
+
+          <app-view-field
+            labelText="Descripción"
+            [textValue]="product?.description"
+          ></app-view-field>
+
+          <div class="mt-4">
+            <label class="form-label fw-bold d-block mb-2">Categorías</label>
+            @if (product && product.categories?.length) {
+              <div class="d-flex flex-wrap gap-2">
+                @for (cat of product.categories; track cat.categoryId) {
+                  <span class="badge bg-primary-subtle text-primary border rounded-pill px-3 py-2">
+                {{ cat.name }}
+              </span>
+                }
+              </div>
+            } @else {
+              <p class="text-muted mb-0">No hay categorías asignadas</p>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <app-view-field
+          class="col-12 col-md-4 mb-3"
+          labelText="Precio"
+          [textValue]="(product?.price ?? 0) + ' GTQ'"
+        ></app-view-field>
+
+        <app-view-field
+          class="col-12 col-md-4 mb-3"
+          labelText="Stock"
+          [textValue]="product?.stock?.toString()"
+        ></app-view-field>
+
+        <app-view-field
+          class="col-12 col-md-4 mb-3"
+          labelText="Vendedor"
+          [textValue]="product?.sellerName || '-'"
+        ></app-view-field>
+      </div>
+    </div>
+  </div>
+</div>

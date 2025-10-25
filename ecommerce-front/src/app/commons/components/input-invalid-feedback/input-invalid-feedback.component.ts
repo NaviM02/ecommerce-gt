@@ -8,5 +8,5 @@ import { Component, Input } from '@angular/core';
 })
 export class InputInvalidFeedbackComponent {
 
-  @Input() message: string = 'txt_required_field';
+  @Input() message: string = 'Campo obligatorio';
 }

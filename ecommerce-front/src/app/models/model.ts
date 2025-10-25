@@ -31,3 +31,37 @@ export class User {
   public active!: boolean;
   public registrationDate!: string;
 }
+
+export class Category {
+  categoryId!: number;
+  name!: string;
+  description!: string;
+}
+
+export class Product {
+  productId!: number;
+  seller!: User;
+  sellerName!: string;
+  name!: string;
+  description!: string;
+  imageUrl!: string;
+  price!: number;
+  stock!: number;
+  categories!: Category[];
+  condition!: number;
+  status!: number;
+  averageRating?: number;
+  createdAt!: string;
+  ratings!: Rating[];
+
+}
+
+export class Rating {
+  ratingId!: number;
+  productId!: number;
+  userId!: number;
+  username!: string;
+  stars!: number;
+  comment!: string;
+  createdAt!: string;
+}

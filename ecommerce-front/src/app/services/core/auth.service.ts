@@ -55,6 +55,10 @@ export class AuthService {
     return this.getDecodedToken()?.sub ?? null;
   }
 
+  getUserId(): number | null {
+    return this.getDecodedToken()?.userId ?? null;
+  }
+
   isAuthenticated(): boolean {
     const decoded = this.getDecodedToken();
     if (!decoded) return false;

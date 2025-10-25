@@ -1,0 +1,28 @@
+<div class="card h-100 shadow-sm border-0 hover-card">
+  <img
+    [src]="product.imageUrl ? environment.imagesUrl + product.imageUrl : '/assets/placeholder.png'"
+    class="card-img-top rounded-top"
+    alt="{{ product.name }}"
+    style="height: 200px; object-fit: cover;"
+  />
+  <div class="card-body d-flex flex-column">
+    <h5 class="card-title mb-1 text-truncate">{{ product.name }}</h5>
+
+    <p class="card-text fw-bold text-primary mb-1">
+      Q{{ product.price | number: '1.2-2' }}
+    </p>
+
+    <div class="mb-2">
+      @for (_ of getStars(product?.averageRating); track _) {
+        <i class="fa fa-star text-warning me-1"></i>
+      }
+      <small class="text-muted ms-1">
+        {{ product.averageRating ? product.averageRating.toFixed(1) : 'Sin calificaciones' }}
+      </small>
+    </div>
+
+    <a class="btn btn-sm btn-outline-primary mt-auto" [routerLink]="[product.productId]">
+      Ver detalles
+    </a>
+  </div>
+</div>
