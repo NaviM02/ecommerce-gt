@@ -35,7 +35,7 @@ public class AuthService {
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expirationMs))
                 .claim("userId", user.getUserId())
-                .claim("role", user.getRole().getRoleName())
+                .claim("role", user.getRole().getRoleId())
                 .signWith(key)
                 .compact();
     }

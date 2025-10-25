@@ -1,45 +1,141 @@
 package com.navi.ecommerceapi.service;
 
+import com.navi.ecommerceapi.dto.ProductDetailDto;
+import com.navi.ecommerceapi.dto.ProductListDto;
+import com.navi.ecommerceapi.dto.RatingResDto;
 import com.navi.ecommerceapi.exception.DomainException;
 import com.navi.ecommerceapi.model.Product;
+import com.navi.ecommerceapi.repository.CategoryRepository;
 import com.navi.ecommerceapi.repository.ProductRepository;
 import com.navi.ecommerceapi.exception.EntityNotFoundException;
+import com.navi.ecommerceapi.repository.RatingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final RatingRepository ratingRepository;
 
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public List<ProductListDto> findAll(Integer status) {
+        List<Product> products = (status != null)
+                ? productRepository.findAllByStatus(status)
+                : productRepository.findAll();
+
+        return products.stream()
+                .map(p -> ProductListDto.builder()
+                        .productId(p.getProductId())
+                        .name(p.getName())
+                        .price(p.getPrice())
+                        .stock(p.getStock())
+                        .categories(p.getCategories())
+                        .condition(p.getCondition())
+                        .status(p.getStatus())
+                        .imageUrl(p.getImageUrl())
+                        .averageRating(ratingRepository.findAverageByProductId(p.getProductId()))
+                        .build())
+                .collect(Collectors.toList());
     }
 
-    public Product findById(Long id) {
-        return productRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+    public ProductDetailDto findById(Long id) {
+        Product product = productRepository.findById(id).orElse(null);
+        if (product == null) throw new EntityNotFoundException("Product not found");
+
+        List<RatingResDto> ratingDtos = ratingRepository.findByProductProductId(product.getProductId())
+                .stream()
+                .map(r -> RatingResDto.builder()
+                        .ratingId(r.getRatingId())
+                        .stars(r.getStars())
+                        .comment(r.getComment())
+                        .username(r.getUser().getUsername())
+                        .createdAt(r.getCreatedAt())
+                        .build())
+                .toList();
+
+        return ProductDetailDto.builder()
+                .productId(product.getProductId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .imageUrl(product.getImageUrl())
+                .price(product.getPrice())
+                .stock(product.getStock())
+                .condition(product.getCondition())
+                .status(product.getStatus())
+                .createdAt(product.getCreatedAt())
+                .categories(product.getCategories())
+                .sellerName(product.getSeller().getFullName())
+                .ratings(ratingDtos)
+                .averageRating(ratingRepository.findAverageByProductId(product.getProductId()))
+                .build();
     }
 
+    public List<ProductListDto> findAllByUserId(Long id) {
+        List<Product> products = productRepository.findBySellerUserId(id);
+
+        return products.stream()
+                .map(p -> ProductListDto.builder()
+                        .productId(p.getProductId())
+                        .name(p.getName())
+                        .price(p.getPrice())
+                        .stock(p.getStock())
+                        .categories(p.getCategories())
+                        .condition(p.getCondition())
+                        .status(p.getStatus())
+                        .imageUrl(p.getImageUrl())
+                        .averageRating(ratingRepository.findAverageByProductId(p.getProductId()))
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
     public Product save(Product product) {
+        if (product.getCategories() == null || product.getCategories().isEmpty()) throw new DomainException("Product must have at least one category");
         return productRepository.save(product);
     }
 
-    public Product update(Long id, Product newProduct) {
+    @Transactional
+    public Product saveWithImage(Product product, MultipartFile image) throws IOException {
+        if (image != null && !image.isEmpty()) product.setImageUrl(getImageUrl(image));
+        return productRepository.save(product);
+    }
+
+    @Transactional
+    public Product update(Long id, Product newProduct, MultipartFile image) throws IOException {
         if (!id.equals(newProduct.getProductId())) throw new DomainException("Bad product id");
-        Product existing = findById(id);
-        existing.setName(newProduct.getName());
-        existing.setDescription(newProduct.getDescription());
-        existing.setPrice(newProduct.getPrice());
-        existing.setStock(newProduct.getStock());
-        existing.setStatus(newProduct.getStatus());
-        return productRepository.save(existing);
+        if (newProduct.getCategories() == null || newProduct.getCategories().isEmpty()) throw new DomainException("Product must have at least one category");
+        if (image != null && !image.isEmpty()) newProduct.setImageUrl(getImageUrl(image));
+        return productRepository.save(newProduct);
     }
 
     public void delete(Long id) {
         productRepository.deleteById(id);
+    }
+
+    private String getImageUrl(MultipartFile image) throws IOException {
+        String uploadDir = "uploads/products/";
+        Path uploadPath = Paths.get(uploadDir);
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        String filename = UUID.randomUUID() + "_" + image.getOriginalFilename();
+        Path filePath = uploadPath.resolve(filename);
+        Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        return "/" + uploadDir + filename;
     }
 }

@@ -32,7 +32,6 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    @JsonManagedReference
     private Role role;
 
     @Column(nullable = false)
