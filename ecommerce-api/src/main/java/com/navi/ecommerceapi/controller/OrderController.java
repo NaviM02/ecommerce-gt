@@ -1,5 +1,8 @@
 package com.navi.ecommerceapi.controller;
 
+import com.navi.ecommerceapi.dto.OrderListResDto;
+import com.navi.ecommerceapi.dto.OrderReqDto;
+import com.navi.ecommerceapi.dto.OrderResDto;
 import com.navi.ecommerceapi.model.Order;
 import com.navi.ecommerceapi.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -17,23 +20,27 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping
-    public ResponseEntity<List<Order>> findAll() {
+    public ResponseEntity<List<OrderListResDto>> findAll() {
         return ResponseEntity.ok(orderService.findAll());
     }
 
+    @GetMapping("user-orders/{id}")
+    public ResponseEntity<List<OrderListResDto>> findAllByUserId(@PathVariable Long id) {
+        return ResponseEntity.ok(orderService.findAllByUserId(id));
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Order> findById(@PathVariable Long id) {
+    public ResponseEntity<OrderResDto> findById(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Order> create(@RequestBody Order order) {
-        Order createdOrder = orderService.save(order);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
+    public ResponseEntity<OrderResDto> create(@RequestBody OrderReqDto order) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.save(order));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Order> update(@PathVariable Long id, @RequestBody Order order) {
+    public ResponseEntity<OrderResDto> update(@PathVariable Long id, @RequestBody Order order) {
         return ResponseEntity.ok(orderService.update(id, order));
     }
 

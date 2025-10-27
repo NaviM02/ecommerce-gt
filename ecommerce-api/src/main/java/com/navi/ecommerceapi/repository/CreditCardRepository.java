@@ -1,12 +1,12 @@
 package com.navi.ecommerceapi.repository;
 
-import com.navi.ecommerceapi.model.PaymentMethod;
+import com.navi.ecommerceapi.model.CreditCard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface PaymentMethodRepository extends JpaRepository<PaymentMethod, Long> {
-    List<PaymentMethod> findByUserUserId(Long userId);
+public interface CreditCardRepository extends JpaRepository<CreditCard, Long> {
+    List<CreditCard> findByUserId(Long userId);
 }

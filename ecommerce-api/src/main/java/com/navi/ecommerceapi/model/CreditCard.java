@@ -10,14 +10,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PaymentMethod {
+public class CreditCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long paymentId;
+    private Long creditCardId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(nullable = false)
+    private Long userId;
 
     @Column(nullable = false)
     private String cardNumber;
@@ -25,7 +24,6 @@ public class PaymentMethod {
     @Column(nullable = false)
     private String cardholderName;
 
-    @Column(nullable = false)
     private LocalDate expirationDate;
 
     private Boolean isActive = true;
