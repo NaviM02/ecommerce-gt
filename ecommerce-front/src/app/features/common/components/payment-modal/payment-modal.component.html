@@ -1,0 +1,72 @@
+<div class="modal-header">
+  <h5 class="modal-title">Pagar carrito</h5>
+  <button type="button" class="btn-close" (click)="closeModal()"></button>
+</div>
+
+<div class="modal-body">
+  @if (cards.length) {
+    <div class="mb-3">
+      <label>Seleccionar tarjeta guardada:</label>
+      <select class="form-select" [(ngModel)]="selectedCardId">
+        <option [ngValue]="undefined">-- Selecciona una tarjeta --</option>
+        @for (card of cards; track card.creditCardId) {
+          <option [ngValue]="card.creditCardId">
+            **** **** **** {{ card.cardNumber.slice(-4) }} ({{ card.cardholderName }})
+          </option>
+        }
+      </select>
+    </div>
+  }
+
+  <hr />
+  <div class="mb-3">
+    <label>Número de tarjeta</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="cardNumber"
+      placeholder="XXXX-XXXX-XXXX-XXXX"
+      [disabled]="!!selectedCardId"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label>Nombre en la tarjeta</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="cardName"
+      placeholder="Juan Pérez"
+      [disabled]="!!selectedCardId"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label>Fecha de vencimiento</label>
+    <input
+      type="month"
+      class="form-control"
+      [(ngModel)]="expirationDate"
+      [disabled]="!!selectedCardId"
+    />
+  </div>
+
+  @if (!selectedCardId){
+    <div class="form-check mb-3">
+      <input
+        type="checkbox"
+        id="saveCard"
+        class="form-check-input"
+        [(ngModel)]="saveCard"
+      />
+      <label for="saveCard" class="form-check-label">
+        Guardar tarjeta para futuras compras
+      </label>
+    </div>
+  }
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+  <button class="btn btn-primary" (click)="pay()">Pagar</button>
+</div>

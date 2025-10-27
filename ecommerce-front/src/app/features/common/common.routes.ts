@@ -32,6 +32,36 @@ export const commonRoutes: Routes = [
           },
         ]
       },
+      {
+        path: 'cart',
+        children: [
+          {
+            path: '', loadComponent: () => import('./pages/cart/cart-items-list/cart-items-list.component').then(c => c.CartItemsListComponent),
+          },
+          {
+            path: ':id', loadComponent: () => import('./pages/products/product-detail/product-detail.component').then(c => c.ProductDetailComponent),
+          },
+        ]
+      },
+      {
+        path: 'cards',
+        children: [
+          {
+            path: '', loadComponent: () => import('./pages/cards/card-list/card-list.component').then(c => c.CardListComponent),
+          },
+        ]
+      },
+      {
+        path: 'orders',
+        children: [
+          {
+            path: '', loadComponent: () => import('./pages/orders/order-list/order-list.component').then(c => c.OrderListComponent),
+          },
+          {
+            path: ':id', loadComponent: () => import('./pages/orders/order-detail/order-detail.component').then(c => c.OrderDetailComponent),
+          },
+        ]
+      },
     ]
   }
 ]

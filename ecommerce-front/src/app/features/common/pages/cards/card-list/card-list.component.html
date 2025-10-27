@@ -1,0 +1,41 @@
+<div class="main-container">
+  <div class="body-container">
+    <div class="list-page-header-container">
+      <app-list-page-header
+        title="Mis Tarjetas"
+        description="Tarjetas guardadas para tus compras"
+      >
+      </app-list-page-header>
+    </div>
+
+    <div class="body bg-white h-100">
+      <div class="table-main-container d-flex flex-column gap-3 h-60">
+        <div class="table-container">
+          <table class="table sticky-header">
+            <tr>
+              <th>Número</th>
+              <th>Titular</th>
+              <th>Vencimiento</th>
+              <th>Estado</th>
+              <th class="text-center">Acciones</th>
+            </tr>
+
+            @for (card of cards; track card.creditCardId) {
+              <tr>
+                <td>**** **** **** {{ card.cardNumber.slice(-4) }}</td>
+                <td>{{ card.cardholderName }}</td>
+                <td>{{ card.expirationDate | date: 'MM/yyyy' }}</td>
+                <td>{{ card.isActive ? 'Activa' : 'Inactiva' }}</td>
+                <td class="text-center">
+                  <app-table-row-action
+                    (deleteAction)="delete(card.creditCardId)"
+                  ></app-table-row-action>
+                </td>
+              </tr>
+            }
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

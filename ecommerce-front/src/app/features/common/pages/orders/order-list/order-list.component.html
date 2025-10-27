@@ -1,0 +1,49 @@
+<div class="main-container">
+  <div class="body-container">
+    <div class="list-page-header-container">
+      <app-list-page-header
+        title="Historial de órdenes"
+        description="Todas tus órdenes realizadas"
+      >
+      </app-list-page-header>
+    </div>
+
+    <div class="body bg-white h-100">
+      <div class="table-main-container d-flex flex-column gap-3 h-60">
+        <div class="table-container">
+          <table class="table sticky-header sticky-actions">
+            <tr>
+              <th>ID</th>
+              <th>Usuario</th>
+              <th>Entrega</th>
+              <th>Estado</th>
+              <th>Total</th>
+              <th class="text-center">Acciones</th>
+            </tr>
+
+            @for (order of orders; track order.orderId) {
+              <tr>
+                <td>{{ order.orderId }}</td>
+                <td>{{ order.username }}</td>
+                <td>{{ order.deliveryDate | date:'shortDate' }}</td>
+                <td>{{ getStatusLabel(order.status) }}</td>
+                <td>{{ order.totalPrice | number:'1.2-2' }} GTQ</td>
+                <td class="text-center">
+                  <app-table-row-action
+                    [viewRoute]="[order.orderId]"
+                  >
+                  </app-table-row-action>
+                </td>
+              </tr>
+            }
+
+          </table>
+
+          @if(!orders.length) {
+            <p class="text-center text-muted mt-3">No hay órdenes para mostrar</p>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

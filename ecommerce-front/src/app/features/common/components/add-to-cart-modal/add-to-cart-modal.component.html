@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <h4 class="modal-title">Agregar al carrito</h4>
+  <button type="button" class="btn-close" (click)="close()"></button>
+</div>
+
+<div class="modal-body">
+  <p class="fw-semibold">{{ product.name }}</p>
+
+  <label for="quantity" class="form-label">
+    Cantidad (máx {{ product.stock }})
+  </label>
+
+  <input
+    id="quantity"
+    type="number"
+    class="form-control"
+    [(ngModel)]="quantity"
+    [max]="product.stock"
+    min="1"
+  />
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-secondary" (click)="close()">Cancelar</button>
+  <button class="btn btn-primary" (click)="confirm()">Agregar</button>
+</div>

@@ -65,3 +65,31 @@ export class Rating {
   comment!: string;
   createdAt!: string;
 }
+
+export class CreditCard {
+  creditCardId!: number;
+  userId!: number;
+  cardNumber!: string;
+  cardholderName!: string;
+  expirationDate!: string;
+  isActive!: boolean;
+}
+
+export class Order {
+  orderId!: number;
+  userId!: number;
+  orderDate!: string;
+  status!: number;
+  deliveryDate!: string;
+  username!: string;
+  details!: OrderDetail[];
+  items!: OrderDetail[];
+  totalPrice!: number;
+}
+
+export class OrderDetail {
+  productId!: number;
+  quantity!: number;
+  productName!: string;
+  price!: number;
+}

@@ -21,14 +21,12 @@ export class ProductService {
   }
 
   save(product: Product, image?: File) {
-    if (!product.productId) {
-      const formData = new FormData();
-      formData.append('product', new Blob([JSON.stringify(product)], { type: 'application/json' }))
-      if (image) formData.append('image', image);
+    const formData = new FormData();
+    formData.append('product', new Blob([JSON.stringify(product)], { type: 'application/json' }))
+    if (image) formData.append('image', image);
 
-      return this.http.post<Product>(this.baseUrl, formData);
-    }
-    return this.http.put<Product>(`${this.baseUrl}/${product.productId}`, product);
+    if (!product.productId) return this.http.post<Product>(this.baseUrl, formData);
+    return this.http.put<Product>(`${this.baseUrl}/${product.productId}`, formData);
   }
 
   findAll(status?: number){

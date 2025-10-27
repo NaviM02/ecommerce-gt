@@ -11,14 +11,14 @@
       <p class="text-muted mb-1">{{ product.description }}</p>
 
       <div class="d-flex align-items-center mb-2">
-        @if(product.ratings?.length) {
-          @for(_ of getStars(Math.round(getAverageRating())); track _) {
+        @if(product.averageRating && product.averageRating > 0) {
+          @for(_ of getStars(Math.round(product.averageRating)); track _) {
             <i class="fa fa-star text-warning me-1"></i>
           }
-          @for(_ of getEmptyStars(Math.round(getAverageRating())); track _) {
+          @for(_ of getEmptyStars(Math.round(product.averageRating)); track _) {
             <i class="fa-regular fa-star text-warning me-1"></i>
           }
-          <span class="ms-2 fw-semibold">{{ getAverageRating() }}/5</span>
+          <span class="ms-2 fw-semibold">{{ product.averageRating }}/5</span>
         } @else {
           <span class="text-muted">Sin calificaciones aún</span>
         }
@@ -39,6 +39,7 @@
           <span class="text-muted">No hay categorías asignadas</span>
         }
       </div>
+      <button class="btn btn-primary mt-5" (click)="openAddCartModal()">Agregar al carrito</button>
     </div>
   </div>
 

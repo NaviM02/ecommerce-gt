@@ -41,6 +41,7 @@ export class SidebarComponent implements OnInit {
           { label: 'Mis Ventas', route: 'user/my-products', icon: 'sell' },
           { label: 'Comprar', route: 'user/products', icon: 'shopping_cart' },
           { label: 'Mi Carrito', route: 'user/cart', icon: 'shopping_basket' },
+          { label: 'Tajetas', route: 'user/cards', icon: 'credit_card' },
           { label: 'Mis Pedidos', route: 'user/orders', icon: 'local_shipping' },
         ];
       case RoleEnum.MODERATOR:

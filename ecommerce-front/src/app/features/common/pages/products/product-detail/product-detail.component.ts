@@ -6,8 +6,11 @@ import { ProductService } from '../../../../../services/core/product.service';
 import { RatingService } from '../../../../../services/core/rating.service';
 import { ToastService } from '../../../../../services/other/toast.service';
 import { AuthService } from '../../../../../services/core/auth.service';
-import { DatePipe, NgClass } from '@angular/common';
+import { DatePipe, NgClass, NgStyle } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CartService } from '../../../../../services/other/cart.service';
+import { AddToCartModalComponent } from '../../../components/add-to-cart-modal/add-to-cart-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-product-detail',
@@ -32,6 +35,8 @@ export class ProductDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private ratingService: RatingService,
+    private cartService: CartService,
+    private modalService: NgbModal,
     private toastService: ToastService,
     private authService: AuthService
   ) {}
@@ -75,13 +80,11 @@ export class ProductDetailComponent implements OnInit {
       comment: this.newRating.comment
     };
 
-    console.log(payload);
-
     this.ratingService.save(payload as Rating).subscribe({
       next: rating => {
         this.toastService.success('¡Gracias por tu calificación!');
         if (!this.product!.ratings) this.product!.ratings = [];
-        //this.product!.ratings.unshift(rating); // agregamos al inicio
+        this.product!.ratings.unshift(rating as Rating);
         this.newRating = { stars: 0, comment: '' };
         this.submitting = false;
       },
@@ -92,12 +95,14 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
-  getAverageRating(): number {
-    if (!this.product || !this.product.ratings?.length) return 0;
+  openAddCartModal() {
+    const modalRef = this.modalService.open(AddToCartModalComponent, {
+      centered: true,
+      size: 'md',
+      backdrop: 'static',
+    });
 
-    const totalStars = this.product.ratings.reduce((sum, r) => sum + r.stars, 0);
-    const avg = totalStars / this.product.ratings.length;
-    return Math.round(avg * 10) / 10;
+    modalRef.componentInstance.product = this.product;
   }
 
   protected readonly Math = Math;
