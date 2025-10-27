@@ -5,10 +5,12 @@ import com.navi.ecommerceapi.dto.ProductListDto;
 import com.navi.ecommerceapi.dto.RatingResDto;
 import com.navi.ecommerceapi.exception.DomainException;
 import com.navi.ecommerceapi.model.Product;
+import com.navi.ecommerceapi.model.User;
 import com.navi.ecommerceapi.repository.CategoryRepository;
 import com.navi.ecommerceapi.repository.ProductRepository;
 import com.navi.ecommerceapi.exception.EntityNotFoundException;
 import com.navi.ecommerceapi.repository.RatingRepository;
+import com.navi.ecommerceapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,8 +30,9 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
     private final RatingRepository ratingRepository;
+    private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
     public List<ProductListDto> findAll(Integer status) {
         List<Product> products = (status != null)
@@ -78,6 +81,7 @@ public class ProductService {
                 .createdAt(product.getCreatedAt())
                 .categories(product.getCategories())
                 .sellerName(product.getSeller().getFullName())
+                .sellerId(product.getSeller().getUserId())
                 .ratings(ratingDtos)
                 .averageRating(ratingRepository.findAverageByProductId(product.getProductId()))
                 .build();
@@ -118,6 +122,21 @@ public class ProductService {
         if (!id.equals(newProduct.getProductId())) throw new DomainException("Bad product id");
         if (newProduct.getCategories() == null || newProduct.getCategories().isEmpty()) throw new DomainException("Product must have at least one category");
         if (image != null && !image.isEmpty()) newProduct.setImageUrl(getImageUrl(image));
+
+        User seller = userRepository.findById(newProduct.getSeller().getUserId()).orElseThrow(() -> new EntityNotFoundException("Vendedor no encontrado"));
+
+        boolean notify = false;
+        String msg = "";
+
+        if (newProduct.getStatus().equals(2)){ // Aprobado
+            msg = String.format("Tu producto '%s' ha sido aprobado por el moderador", newProduct.getName());
+            notify = true;
+        } else if (newProduct.getStatus().equals(3)){ // Rechazado
+            msg = String.format("Tu producto '%s' ha sido rechazado por el moderador", newProduct.getName());
+            notify = true;
+        }
+
+        if (notify) notificationService.createNotification(seller, msg, "PRODUCTO");
         return productRepository.save(newProduct);
     }
 

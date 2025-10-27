@@ -25,5 +25,6 @@ public class ProductDetailDto {
     private List<Category> categories;
     private List<RatingResDto> ratings;
     private String sellerName;
+    private Long sellerId;
     private Double averageRating;
 }

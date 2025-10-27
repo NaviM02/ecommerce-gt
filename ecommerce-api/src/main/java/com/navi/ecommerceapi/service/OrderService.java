@@ -30,6 +30,7 @@ public class OrderService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
     private final OrderMapper orderMapper;
+    private final NotificationService notificationService;
 
     public List<OrderListResDto> findAll() {
         return orderRepository.findAll().stream().map(orderMapper::toListDto).collect(Collectors.toList());
@@ -88,6 +89,15 @@ public class OrderService {
         existing.setDeliveryDate(newOrder.getDeliveryDate());
 
         Order updatedOrder = orderRepository.save(existing);
+        // 2: Entregado
+        if (newOrder.getStatus().equals(2)) {
+            String msg = String.format(
+                    "Tu pedido con numero de identificacion #%d ha sido entregado.",
+                    updatedOrder.getOrderId()
+            );
+            notificationService.createNotification(updatedOrder.getUser(), msg, "PEDIDO");
+        }
+
         return orderMapper.toDetailDto(updatedOrder);
     }
 
