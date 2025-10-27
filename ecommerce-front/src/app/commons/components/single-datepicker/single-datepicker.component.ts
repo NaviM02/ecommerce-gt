@@ -67,7 +67,7 @@ export class SingleDatepickerComponent {
   @Input() disabled: boolean = false;
 
   // message for invalid date, default is 'txt_invalid_date', if not present it will not be shown
-  @Input() txtInvalidFeedback: string = 'txt_invalid_date';
+  @Input() txtInvalidFeedback: string = 'Fecha no inválida';
 
   // model in ISO format
   @Output() modelChange = new EventEmitter<string>();

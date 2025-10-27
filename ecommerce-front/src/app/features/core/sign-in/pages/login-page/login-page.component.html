@@ -26,6 +26,14 @@
         </div>
         <span class="fw-bold text-secondary text-end recovery">{{ 'Recuperar contraseña' }}</span>
         <button type="button" class="btn btn-primary" (click)="doLogin()">{{ 'Iniciar sesión' }}</button>
+        <p class="m-0 text-center">¿No tienes una cuenta aún?</p>
+        <span
+          role="button"
+          class="fw-bold text-secondary mx-auto hover-bs-primary recovery"
+          [routerLink]="['/c/signup']"
+        >
+          Crear cuenta
+        </span>
       </div>
     </div>
   </div>

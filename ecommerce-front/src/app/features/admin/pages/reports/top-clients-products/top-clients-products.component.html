@@ -1,0 +1,44 @@
+<div class="main-container">
+  <div class="body-container">
+    <div class="list-page-header-container">
+      <app-list-page-header
+        title="Top Vendedores por Cantidad de Productos"
+        description="Lista de los vendedores con más productos en la aplicación"
+      >
+      </app-list-page-header>
+    </div>
+
+    <div class="body bg-white h-100">
+      <div class="table-main-container d-flex flex-column gap-3 h-60">
+        <!-- tabla -->
+        <div class="table-container">
+          <table class="table sticky-header">
+            <tr>
+              <th>#</th>
+              <th>Vendedor</th>
+              <th>Total Productos Vendidos</th>
+            </tr>
+
+            @if (loading) {
+              <tr>
+                <td colspan="3" class="text-center py-3 text-muted">Cargando...</td>
+              </tr>
+            } @else if (sellers.length === 0) {
+              <tr>
+                <td colspan="3" class="text-center py-3 text-muted">No hay datos</td>
+              </tr>
+            } @else {
+              @for (s of sellers; track s.userId; let i = $index) {
+                <tr>
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ s.fullName }}</td>
+                  <td>{{ s.totalProducts }}</td>
+                </tr>
+              }
+            }
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

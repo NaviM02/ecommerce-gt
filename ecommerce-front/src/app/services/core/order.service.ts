@@ -19,7 +19,12 @@ export class OrderService {
     return this.http.get<Order[]>(this.baseUrl);
   }
 
+  findByUserId(userId: number){
+    return this.http.get<Order[]>(`${this.baseUrl}/user-orders/${userId}`);
+  }
+
   save(order: Order){
+    if (order.orderId) return this.http.put(`${this.baseUrl}/${order.orderId}`, order);
     return this.http.post(this.baseUrl, order);
   }
 

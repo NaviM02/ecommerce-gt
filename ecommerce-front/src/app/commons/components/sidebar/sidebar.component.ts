@@ -7,8 +7,10 @@ import { RoleEnum } from '../../../models/role.enum';
 
 interface MenuItem {
   label: string;
-  route: string;
+  route?: string;
   icon?: string;
+  children?: MenuItem[];
+  expanded?: boolean;
 }
 
 @Component({
@@ -46,21 +48,58 @@ export class SidebarComponent implements OnInit {
         ];
       case RoleEnum.MODERATOR:
         return [
-          { label: 'Revisar Productos', route: 'moderator/revisar-productos', icon: 'check_circle' },
-          { label: 'Reportes Moderación', route: 'moderator/reportes-moderacion', icon: 'assessment' },
+          { label: 'Revisar Productos', route: 'moderator/products', icon: 'check_circle' },
+          { label: 'Sanciones', route: 'moderator/sanctions', icon: 'assessment' },
         ];
       case RoleEnum.LOGISTICS:
         return [
-          { label: 'Control Paquetes', route: 'logistics/control-paquetes', icon: 'local_shipping' },
-          { label: 'Historial Entregas', route: 'logistics/historial-entregas', icon: 'history' },
+          { label: 'Control Pedidos', route: 'logistic/orders', icon: 'local_shipping' },
         ];
       case RoleEnum.ADMINISTRATOR:
         return [
           { label: 'Usuarios', route: 'admin/users', icon: 'person_add' },
-          { label: 'Generar Reportes', route: 'admin/reports', icon: 'bar_chart' },
+          {
+            label: 'Reportes',
+            icon: 'bar_chart',
+            expanded: false,
+            children: [
+              {
+                label: 'Top 10 productos más vendidos',
+                route: 'admin/reports/top-products'
+              },
+              {
+                label: 'Top 5 clientes con más ganancias',
+                route: 'admin/reports/top-clients-profit'
+              },
+              {
+                label: 'Top 5 clientes con más ventas',
+                route: 'admin/reports/top-clients-sales'
+              },
+              {
+                label: 'Top 10 clientes con más pedidos',
+                route: 'admin/reports/top-clients-orders'
+              },
+              {
+                label: 'Top 10 clientes con más productos en venta',
+                route: 'admin/reports/top-clients-products'
+              },
+              {
+                label: 'Sanciones',
+                route: 'admin/reports/sanctions'
+              },
+              {
+                label: 'Notificaciones',
+                route: 'admin/reports/notifications'
+              },
+            ]
+          }
         ];
       default:
         return [];
     }
+  }
+
+  toggleSubmenu(item: MenuItem) {
+    item.expanded = !item.expanded;
   }
 }

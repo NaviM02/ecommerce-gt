@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { InputForPasswordComponent } from '../../../../../commons/components/input-for-password/input-for-password.component';
 import { InputWithIconComponent } from '../../../../../commons/components/input-with-icon/input-with-icon.component';
 import { RequiredIndicatorComponent } from '../../../../../commons/components/required-indicator/required-indicator.component';
@@ -18,7 +18,8 @@ import { AuthRequestDto } from '../../../../../models/model';
     LoginBannerComponent,
     InputForPasswordComponent,
     InputWithIconComponent,
-    RequiredIndicatorComponent
+    RequiredIndicatorComponent,
+    RouterLink
   ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss'

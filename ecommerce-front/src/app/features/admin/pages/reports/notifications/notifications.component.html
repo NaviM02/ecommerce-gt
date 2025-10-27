@@ -1,0 +1,61 @@
+<div class="main-container">
+  <div class="body-container">
+    <div class="list-page-header-container">
+      <app-list-page-header
+        title="Notificaciones"
+        description="Listado de notificaciones enviadas a los usuarios"
+      >
+      </app-list-page-header>
+    </div>
+
+    <div class="body bg-white h-100">
+      <div class="table-main-container d-flex flex-column gap-3 h-60">
+        <div class="table-container">
+          <table class="table sticky-header">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Usuario</th>
+              <th>Mensaje</th>
+              <th>Tipo</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+            </tr>
+            </thead>
+
+            <tbody>
+              @if (loading) {
+                <tr>
+                  <td colspan="6" class="text-center py-3 text-muted">Cargando...</td>
+                </tr>
+              } @else if (notifications.length === 0) {
+                <tr>
+                  <td colspan="6" class="text-center py-3 text-muted">No hay notificaciones</td>
+                </tr>
+              } @else {
+                @for (n of notifications; track n.notificationId; let i = $index) {
+                  <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ n.username }}</td>
+                    <td>{{ n.message }}</td>
+                    <td>
+                      <span>
+                        {{ n.type | titlecase }}
+                      </span>
+                    </td>
+                    <td>{{ formatDate(n.createdAt) }}</td>
+                    <td>
+                      <span>
+                        {{ n.wasSent ? 'Enviada' : 'Pendiente' }}
+                      </span>
+                    </td>
+                  </tr>
+                }
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

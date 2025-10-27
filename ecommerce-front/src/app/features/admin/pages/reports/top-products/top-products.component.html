@@ -1,0 +1,65 @@
+<div class="main-container">
+  <div class="body-container">
+    <div class="list-page-header-container">
+      <app-list-page-header
+        title="Top Productos"
+        description="Productos más vendidos en el rango de fechas seleccionado"
+      >
+      </app-list-page-header>
+    </div>
+
+    <div class="body bg-white h-100">
+      <div class="table-main-container d-flex flex-column gap-3 h-60">
+        <!-- filtros -->
+        <div class="table-actions d-flex align-items-center gap-3">
+          <div>
+            <label class="form-label fw-bold mb-1">Fecha inicio</label>
+            <app-single-datepicker
+              [(model)]="startDate"
+              (modelChange)="onStartDateChange($event)"
+            ></app-single-datepicker>
+          </div>
+          <div>
+            <label class="form-label fw-bold mb-1">Fecha fin</label>
+            <app-single-datepicker
+              [(model)]="endDate"
+              (modelChange)="onEndDateChange($event)"
+            ></app-single-datepicker>
+          </div>
+          <div>
+            <label class="form-label fw-bold mb-1"></label>
+            <button class="btn btn-primary" (click)="onFilter()">Filtrar</button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="table sticky-header">
+            <tr>
+              <th>#</th>
+              <th>Producto</th>
+              <th>Total Vendido</th>
+            </tr>
+
+            @if (loading) {
+              <tr>
+                <td colspan="3" class="text-center py-3 text-muted">Cargando...</td>
+              </tr>
+            } @else if (products.length === 0) {
+              <tr>
+                <td colspan="3" class="text-center py-3 text-muted">No hay datos</td>
+              </tr>
+            } @else {
+              @for (p of products; track p.productId; let i = $index) {
+                <tr>
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ p.productName }}</td>
+                  <td>{{ p.totalSold }}</td>
+                </tr>
+              }
+            }
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

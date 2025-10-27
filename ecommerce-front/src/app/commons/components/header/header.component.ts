@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle } from '@ng-bootstrap/ng-bootstrap';
 import { MaterialIconComponent } from '../material-icon/material-icon.component';
 import { AuthService } from '../../../services/core/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { RoleEnum } from '../../../models/role.enum';
 
 @Component({
@@ -14,7 +14,8 @@ import { RoleEnum } from '../../../models/role.enum';
     NgbDropdownItem,
     NgbDropdownToggle,
     NgbDropdown,
-    NgbDropdown
+    NgbDropdown,
+    RouterLink
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
@@ -44,7 +45,6 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    console.log('Cerrando sesión...');
     this.authService.clearToken();
   }
 

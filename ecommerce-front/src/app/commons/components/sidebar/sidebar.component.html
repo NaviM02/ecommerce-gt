@@ -1,10 +1,33 @@
 <div class="side-bar pt-4" [ngClass]="{ 'active': active }">
   @for (item of items; track item.label) {
-    <div class="d-flex align-items-center gap-2 px-4 py-1 mt-2 menu-item" [routerLink]="item.route" routerLinkActive="active">
-      @if(item.icon) {
-        <app-material-icon>{{ item.icon }}</app-material-icon>
+    <div>
+      <!-- Item principal -->
+      <div
+        class="d-flex align-items-center gap-2 px-4 py-1 mt-2 menu-item"
+        [routerLink]="item.route || null"
+        [routerLinkActive]="!item.children ? 'active' : ''"
+        (click)="item.children ? toggleSubmenu(item) : null"
+      >
+        @if(item.icon) {
+          <app-material-icon>{{ item.icon }}</app-material-icon>
+        }
+        <p class="m-0 item-name">{{ item.label }}</p>
+      </div>
+
+      <!-- Submenú -->
+      @if(item.children && item.expanded) {
+        <div class="submenu mt-1">
+          @for (child of item.children; track child.label) {
+            <div
+              class="d-flex align-items-center gap-2 px-5 py-1 menu-item submenu-item"
+              [routerLink]="child.route"
+              routerLinkActive="active"
+            >
+              <p class="m-0 item-name">{{ child.label }}</p>
+            </div>
+          }
+        </div>
       }
-      <p class="m-0 item-name">{{ item.label }}</p>
     </div>
   }
 </div>

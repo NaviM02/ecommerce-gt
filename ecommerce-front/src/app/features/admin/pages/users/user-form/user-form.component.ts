@@ -56,7 +56,6 @@ export class UserFormComponent implements OnInit {
 
   roles: Role[] = [
     {roleId: 1, roleName: 'ADMIN'},
-    {roleId: 2, roleName: 'COMUN'},
     {roleId: 3, roleName: 'MODERADOR'},
     {roleId: 4, roleName: 'LOGISTICA'},
   ];
@@ -100,7 +99,7 @@ export class UserFormComponent implements OnInit {
   }
 
   onSave() {
-    if (!this.isValid) return this.toastService.warning('msg_error_required_fields');
+    if (!this.isValid) return this.toastService.warning('Llene todo el formulario');
 
     this.user.active = this.userStatus;
     this.user.role = this.selectedRole ?? new Role();

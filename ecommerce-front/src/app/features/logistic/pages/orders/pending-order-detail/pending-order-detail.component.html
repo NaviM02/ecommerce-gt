@@ -1,0 +1,99 @@
+<div class="main-container">
+  <div class="body-container">
+    <div class="detail-header-container">
+      <app-detail-page-header
+        [backRoute]="['/logistic/orders']"
+        description="Historial de órdenes"
+        [itemName]="'Orden #' + order.orderId"
+      >
+      </app-detail-page-header>
+    </div>
+
+    <div class="body bg-white w-100 p-5">
+      <div class="row mb-3">
+        <app-view-field
+          class="col-12 col-lg-6"
+          labelText="Estado"
+          [textValue]="getStatusLabel(order.status)"
+        ></app-view-field>
+
+        <app-view-field
+          class="col-12 col-lg-6"
+          labelText="Usuario"
+          [textValue]="order.username"
+        ></app-view-field>
+      </div>
+
+      <div class="row mb-3">
+        <app-view-field
+          class="col-12 col-lg-6"
+          labelText="Fecha de la orden"
+          [textValue]="(order.orderDate | date:'dd/MM/yyyy') + ''"
+        ></app-view-field>
+
+        <app-view-field
+          class="col-12 col-lg-6"
+          labelText="Fecha de entrega"
+          [textValue]="(order.deliveryDate | date:'dd/MM/yyyy') + ''"
+        ></app-view-field>
+      </div>
+
+      <div class="row mb-3">
+        <app-view-field
+          class="col-12 col-lg-6"
+          labelText="Total"
+          [textValue]="(order.totalPrice | number:'1.2-2' ) + ' GTQ'"
+        ></app-view-field>
+      </div>
+
+      <h5 class="mt-4 mb-2">Detalles de la orden</h5>
+      <div class="table-container">
+        <table class="table table-bordered">
+          <thead class="table-light">
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Subtotal</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (item of order.details; track item.productId) {
+              <tr>
+                <td>{{ item.productName }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price | number:'1.2-2' }}</td>
+                <td>{{ (item.price * item.quantity) | number:'1.2-2' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    @if (order.status === OrderStatus.COMING){
+      <div class="actions mt-4 p-3 bg-light rounded shadow-sm">
+        <h5>Acciones</h5>
+
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <label for="deliveryDate" class="form-label mb-0">Nueva fecha de entrega:</label>
+          <app-single-datepicker
+            [(model)]="newDeliveryDate"
+          ></app-single-datepicker>
+          <button class="btn btn-primary btn-sm" (click)="updateDeliveryDate()">
+            Actualizar fecha
+          </button>
+        </div>
+
+        <div>
+          <button
+            class="btn btn-success btn-sm"
+            (click)="markAsDelivered()"
+          >
+            Marcar como entregado
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

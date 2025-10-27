@@ -41,6 +41,7 @@ export class Category {
 export class Product {
   productId!: number;
   seller!: User;
+  sellerId!: number;
   sellerName!: string;
   name!: string;
   description!: string;
@@ -92,4 +93,14 @@ export class OrderDetail {
   quantity!: number;
   productName!: string;
   price!: number;
+}
+
+export class Notification {
+  notificationId!: number;
+  userId!: number;
+  username!: string;
+  message!: string;
+  type!: string;
+  createdAt!: string;
+  wasSent!: boolean;
 }

@@ -17,9 +17,10 @@
         <div class="table-container">
           <table class="table sticky-header sticky-actions">
             <tr>
-              <th class="th-email">{{ 'Usuario' }}</th>
+              <th class="th-username">{{ 'Usuario' }}</th>
               <th class="th-name">{{ 'Nombre' }}</th>
-              <th class="th-forms">{{ 'Email' }}</th>
+              <th class="th-email">{{ 'Email' }}</th>
+              <th class="th-role">{{ 'Role' }}</th>
               <th class="th-actions text-center">{{ 'Acciones' }}</th>
             </tr>
 
@@ -30,6 +31,7 @@
                 </td>
                 <td>{{ user.fullName }}</td>
                 <td>{{ user.email }}</td>
+                <td>{{ getRoleStr(user.role.roleId) }}</td>
                 <td class="text-center">
                   <app-table-row-action
                     [viewRoute]="['/admin/users', user.userId]"

@@ -14,6 +14,7 @@
     cursor: pointer;
     color: var(--bs-primary);
     font-weight: 500;
+    transition: color 0.2s;
 
     &:hover {
       color: var(--bs-secondary);
@@ -21,6 +22,25 @@
 
     &.active {
       color: var(--bs-secondary);
+    }
+  }
+
+  .submenu {
+    .submenu-item {
+      cursor: pointer;
+      font-weight: 400;
+      font-size: 0.95rem;
+      color: var(--bs-primary);
+      transition: color 0.2s;
+
+      &:hover {
+        color: var(--bs-secondary);
+      }
+
+      &.active {
+        color: var(--bs-secondary);
+        font-weight: 500;
+      }
     }
   }
 

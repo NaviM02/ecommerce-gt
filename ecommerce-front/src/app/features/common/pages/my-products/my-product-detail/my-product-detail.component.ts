@@ -9,13 +9,13 @@ import { ProductService } from '../../../../../services/core/product.service';
 import { ToastService } from '../../../../../services/other/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environment';
-import { ViewFieldComponent } from '../../../../../commons/components/view-field/view-field.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-my-product-detail',
   imports: [
     DetailPageHeaderComponent,
-    ViewFieldComponent
+    DatePipe
   ],
   templateUrl: './my-product-detail.component.html',
   styleUrl: './my-product-detail.component.scss'

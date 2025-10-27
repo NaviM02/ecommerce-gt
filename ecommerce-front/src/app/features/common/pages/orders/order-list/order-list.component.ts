@@ -6,6 +6,7 @@ import { OrderStatus } from '../../../../../models/order-status.enum';
 import { ListPageHeaderComponent } from '../../../../../commons/components/list-page-header/list-page-header.component';
 import { TableRowActionComponent } from '../../../../../commons/components/table-row-action/table-row-action.component';
 import { DatePipe, DecimalPipe } from '@angular/common';
+import { AuthService } from '../../../../../services/core/auth.service';
 
 @Component({
   selector: 'app-order-list',
@@ -22,6 +23,7 @@ export class OrderListComponent implements OnInit {
   orders: Order[] = [];
 
   constructor(
+    private authService: AuthService,
     private orderService: OrderService,
     private toastService: ToastService,
   ) {}
@@ -31,7 +33,10 @@ export class OrderListComponent implements OnInit {
   }
 
   findAll() {
-    this.orderService.findAll().subscribe({
+    const userId = this.authService.getUserId();
+    if (!userId) return this.toastService.error('No hay usuario')
+
+    this.orderService.findByUserId(userId).subscribe({
       next: data => this.orders = data,
       error: () => this.toastService.error('Error del servidor')
     });

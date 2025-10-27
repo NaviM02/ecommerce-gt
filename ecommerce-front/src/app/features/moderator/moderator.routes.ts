@@ -2,10 +2,21 @@ import { Routes } from '@angular/router';
 
 export const moderatorRoutes: Routes = [
   {
-    path: '',
+    path: 'products',
     children: [
       {
-        path: '',
+        path: '', loadComponent: () => import('./pages/products/product-m-list/product-m-list.component').then(c => c.ProductMListComponent),
+      },
+      {
+        path: ':id', loadComponent: () => import('./pages/products/product-m-detail/product-m-detail.component').then(c => c.ProductMDetailComponent),
+      }
+    ]
+  },
+  {
+    path: 'sanctions',
+    children: [
+      {
+        path: '', loadComponent: () => import('./pages/sanctions/sanction-list/sanction-list.component').then(c => c.SanctionListComponent),
       }
     ]
   }

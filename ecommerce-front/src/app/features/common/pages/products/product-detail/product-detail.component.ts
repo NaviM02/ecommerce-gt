@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Product, Rating, User } from '../../../../../models/model';
+import { Product, Rating } from '../../../../../models/model';
 import { environment } from '../../../../../../environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../../../services/core/product.service';
 import { RatingService } from '../../../../../services/core/rating.service';
 import { ToastService } from '../../../../../services/other/toast.service';
 import { AuthService } from '../../../../../services/core/auth.service';
-import { DatePipe, NgClass, NgStyle } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CartService } from '../../../../../services/other/cart.service';
 import { AddToCartModalComponent } from '../../../components/add-to-cart-modal/add-to-cart-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -35,7 +34,6 @@ export class ProductDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private ratingService: RatingService,
-    private cartService: CartService,
     private modalService: NgbModal,
     private toastService: ToastService,
     private authService: AuthService

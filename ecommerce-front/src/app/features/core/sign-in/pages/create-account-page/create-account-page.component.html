@@ -1,0 +1,81 @@
+<main class="w-100 vh-100 create-account-page">
+  <div class="row h-100 ">
+    <div class="col-12 col-md-6 h-100 d-none d-md-block">
+      <app-login-banner></app-login-banner>
+    </div>
+    <div class="col-12 col-md-6 h-100 d-flex align-items-center">
+      <div class="d-flex justify-content-between flex-column gap-3 w-50 p-0 mx-auto">
+        <p class="h4">Crear cuenta</p>
+        <p class="m-0">Ingresa tus datos para crear una cuenta y acceder al sistema.</p>
+        <app-required-indicator></app-required-indicator>
+        <div class="form-group">
+          <label id="full-name" class="required-field">Nombre completo</label>
+          <app-input-with-icon
+            [(ngModel)]="user.fullName"
+            inputType="text"
+            placeholder="Ej. Ericka Andrea Toj Ordoñez"
+            icon="account_box"
+            iconPosition="left"/>
+        </div>
+        <div class="form-group">
+          <label id="full-name" class="required-field">Nombre de usuario</label>
+          <app-input-with-icon
+            [(ngModel)]="user.username"
+            inputType="text"
+            placeholder="Ej. ericka.toj"
+            icon="account_box"
+            iconPosition="left"/>
+        </div>
+        <div class="form-group">
+          <label id="phone-number" class="required-field">Teléfono</label>
+
+          <div class="d-flex gap-1">
+            <div class="flex-grow-1">
+              <app-input-with-icon
+                [(ngModel)]="user.phone"
+                inputType="text"
+                placeholder="Ej. 1234 5678"
+                icon="call"
+                iconPosition="left"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label id="email" class="required-field">Correo electrónico</label>
+          <app-input-with-icon
+            [(ngModel)]="user.email"
+            inputType="text"
+            placeholder="Ej. dirección@correo.com"
+            icon="email"
+            iconPosition="left"/>
+        </div>
+        <div class="form-group">
+          <label id="password" class="required-field">Contraseña</label>
+          <app-input-for-password
+            [(ngModel)]="user.password"
+            placeholder="Ingrese su contraseña"
+            iconPosition="left"/>
+        </div>
+        <div class="form-group">
+          <label id="password" class="required-field">Confirmar contraseña</label>
+          <app-input-for-password
+            [(ngModel)]="confirmPassword"
+            placeholder="Ingrese otra vez su contraseña"
+            iconPosition="left"/>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="create()">Crear cuenta</button>
+        <p class="m-0 text-center">¿Ya tienes una cuenta?</p>
+        <span
+          role="button"
+          class="fw-bold text-secondary mx-auto hover-bs-primary"
+          [routerLink]="['/c/login']"
+        >
+          Ir a inicio de sesión
+        </span>
+      </div>
+    </div>
+  </div>
+</main>
+
+

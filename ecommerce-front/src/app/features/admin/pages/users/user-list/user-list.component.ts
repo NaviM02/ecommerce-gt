@@ -6,6 +6,7 @@ import { ConfirmActionService } from '../../../../../services/other/confirm-acti
 import { confirmAction } from '../../../../../commons/decorators/confirm.decorator';
 import { ListPageHeaderComponent } from '../../../../../commons/components/list-page-header/list-page-header.component';
 import { TableRowActionComponent } from '../../../../../commons/components/table-row-action/table-row-action.component';
+import { RoleEnum } from '../../../../../models/role.enum';
 
 @Component({
   selector: 'app-user-list',
@@ -56,5 +57,14 @@ export class UserListComponent implements OnInit {
         },
         error: _ => this.toastService.error('msg_error_server')
       });
+  }
+
+  getRoleStr(role: number){
+    switch (role) {
+      case RoleEnum.ADMINISTRATOR: return 'Administrador';
+      case RoleEnum.MODERATOR: return 'Moderador';
+      case RoleEnum.LOGISTICS: return 'Logistica';
+      default: return '';
+    }
   }
 }

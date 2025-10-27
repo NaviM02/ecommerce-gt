@@ -4,6 +4,7 @@ import { tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Token, AuthRequestDto, DecodedToken } from '../../models/model';
 import { jwtDecode } from 'jwt-decode';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,9 @@ export class AuthService {
   private baseUrl: string = `${environment.baseUrl}/auth`;
   private storageKey = 'nibelungo';
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private router: Router) {
   }
 
   doLogin(authReq: AuthRequestDto) {
@@ -34,6 +37,7 @@ export class AuthService {
 
   clearToken() {
     localStorage.removeItem(this.storageKey);
+    this.router.navigate(['/c/login']).then();
   }
 
   getDecodedToken(): DecodedToken | null {
@@ -63,5 +67,9 @@ export class AuthService {
     const decoded = this.getDecodedToken();
     if (!decoded) return false;
     return decoded.exp * 1000 > Date.now();
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
   }
 }
