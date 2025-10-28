@@ -28,8 +28,11 @@ export class UserService {
     return this.http.post(this.baseUrl, user);
   }
 
-  findAll(){
-    return this.http.get<User[]>(this.baseUrl);
+  findAll(roleIds?: number[], excludeRoleId?: number) {
+    let params: any = {};
+    if (roleIds && roleIds.length > 0) params.roleIds = roleIds.join(',');
+    if (excludeRoleId) params.excludeRoleId = excludeRoleId;
+    return this.http.get<User[]>(this.baseUrl, { params });
   }
 
   delete(id: number){

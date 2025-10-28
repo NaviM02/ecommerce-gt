@@ -104,3 +104,15 @@ export class Notification {
   createdAt!: string;
   wasSent!: boolean;
 }
+
+export class Sanction {
+  sanctionId!: number;
+  userId!: number;
+  moderatorId!: number;
+  username!: string;
+  moderatorUsername!: string;
+  startDate!: string;
+  endDate!: string;
+  reason!: string;
+  status!: string;
+}

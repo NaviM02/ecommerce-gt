@@ -12,7 +12,6 @@
       <div class="table-main-container d-flex flex-column gap-3 h-60">
         <div class="table-container">
           <table class="table sticky-header">
-            <thead>
             <tr>
               <th>#</th>
               <th>Usuario</th>
@@ -21,10 +20,7 @@
               <th>Fecha</th>
               <th>Estado</th>
             </tr>
-            </thead>
-
-            <tbody>
-              @if (loading) {
+            @if (loading) {
                 <tr>
                   <td colspan="6" class="text-center py-3 text-muted">Cargando...</td>
                 </tr>
@@ -52,7 +48,6 @@
                   </tr>
                 }
               }
-            </tbody>
           </table>
         </div>
       </div>

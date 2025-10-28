@@ -1,1 +1,57 @@
-<p>sanctions works!</p>
+<div class="main-container">
+  <div class="body-container">
+    <div class="list-page-header-container">
+      <app-list-page-header
+        title="Sanciones"
+        description="Listado de sanciones aplicadas a los usuarios"
+      >
+      </app-list-page-header>
+    </div>
+
+    <div class="body bg-white h-100">
+      <div class="table-main-container d-flex flex-column gap-3 h-60">
+
+        <div class="table-container">
+          <table class="table sticky-header">
+            <tr>
+              <th>#</th>
+              <th>Usuario</th>
+              <th>Moderador</th>
+              <th>Motivo</th>
+              <th>Fecha Inicio</th>
+              <th>Fecha Fin</th>
+              <th>Estado</th>
+            </tr>
+
+            @if (loading) {
+              <tr>
+                <td colspan="7" class="text-center py-3 text-muted">Cargando...</td>
+              </tr>
+            } @else if (sanctions.length === 0) {
+              <tr>
+                <td colspan="7" class="text-center py-3 text-muted">No hay sanciones registradas</td>
+              </tr>
+            } @else {
+              @for (s of sanctions; track s.sanctionId; let i = $index) {
+                <tr>
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ s.username || '—' }}</td>
+                  <td>{{ s.moderatorUsername || '—' }}</td>
+                  <td>{{ s.reason }}</td>
+                  <td>{{ s.startDate | date:'mediumDate' }}</td>
+                  <td>{{ s.endDate | date:'mediumDate' }}</td>
+                  <td>
+                    <span>
+                      {{ s.status | titlecase }}
+                    </span>
+                  </td>
+                </tr>
+              }
+            }
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -12,12 +12,4 @@ export const moderatorRoutes: Routes = [
       }
     ]
   },
-  {
-    path: 'sanctions',
-    children: [
-      {
-        path: '', loadComponent: () => import('./pages/sanctions/sanction-list/sanction-list.component').then(c => c.SanctionListComponent),
-      }
-    ]
-  }
 ]

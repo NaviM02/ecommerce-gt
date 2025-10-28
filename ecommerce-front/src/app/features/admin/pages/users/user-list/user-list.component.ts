@@ -34,7 +34,7 @@ export class UserListComponent implements OnInit {
   }
 
   findAll() {
-    this.userService.findAll().subscribe({
+    this.userService.findAll(undefined, RoleEnum.COMMON).subscribe({
       next: data => {
         this.users = data;
       },

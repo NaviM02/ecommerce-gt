@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <h5 class="modal-title">Crear sanción</h5>
+  <button type="button" class="btn-close" (click)="close()"></button>
+</div>
+
+<div class="modal-body">
+  <p><strong>Usuario sancionado:</strong> {{ sellerName }}</p>
+
+  <div class="mb-3">
+    <label class="form-label fw-semibold">Motivo</label>
+    <textarea
+      class="form-control"
+      [(ngModel)]="sanction.reason"
+      rows="3"
+      placeholder="Describe el motivo de la sanción"
+    ></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label fw-semibold">Fecha fin</label>
+    <app-single-datepicker [(model)]="sanction.endDate"></app-single-datepicker>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="save()">Guardar</button>
+</div>

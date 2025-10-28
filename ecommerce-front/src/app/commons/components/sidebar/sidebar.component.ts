@@ -49,7 +49,6 @@ export class SidebarComponent implements OnInit {
       case RoleEnum.MODERATOR:
         return [
           { label: 'Revisar Productos', route: 'moderator/products', icon: 'check_circle' },
-          { label: 'Sanciones', route: 'moderator/sanctions', icon: 'assessment' },
         ];
       case RoleEnum.LOGISTICS:
         return [

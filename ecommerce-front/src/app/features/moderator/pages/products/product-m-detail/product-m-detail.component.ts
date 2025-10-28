@@ -12,6 +12,7 @@ import {
   DetailPageHeaderComponent
 } from '../../../../../commons/components/detail-page-header/detail-page-header.component';
 import { ProductStatus } from '../../../../../models/product-status.enum';
+import { AddSanctionModalComponent } from '../../../components/add-sanction-modal/add-sanction-modal.component';
 
 @Component({
   selector: 'app-product-m-detail',
@@ -33,7 +34,8 @@ export class ProductMDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -80,6 +82,23 @@ export class ProductMDetailComponent implements OnInit {
       },
       error: () => this.toastService.error('Error al guardar el producto')
     })
+  }
+
+  openSanctionModal() {
+    const modalRef = this.modalService.open(AddSanctionModalComponent, {
+      centered: true,
+      size: 'lg',
+      backdrop: 'static'
+    });
+
+    modalRef.componentInstance.sellerId = this.product.sellerId;
+    modalRef.componentInstance.sellerName = this.product.sellerName;
+
+    modalRef.result
+      .then((result) => {
+        if (result) this.reject();
+      })
+      .catch(() => {});
   }
 
   protected readonly Math = Math;

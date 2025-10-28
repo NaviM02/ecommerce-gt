@@ -37,6 +37,7 @@ export class AuthService {
 
   clearToken() {
     localStorage.removeItem(this.storageKey);
+    localStorage.removeItem('cart');
     this.router.navigate(['/c/login']).then();
   }
 
