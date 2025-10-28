@@ -17,7 +17,12 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<User>> findAll(
+            @RequestParam(required = false) List<Long> roleIds,
+            @RequestParam(required = false) Long excludeRoleId
+    ) {
+        if (roleIds != null && !roleIds.isEmpty()) return ResponseEntity.ok(userService.findUsersByRoles(roleIds));
+        if (excludeRoleId != null) return ResponseEntity.ok(userService.findUsersExcludingRole(excludeRoleId));
         return ResponseEntity.ok(userService.findAll());
     }
 

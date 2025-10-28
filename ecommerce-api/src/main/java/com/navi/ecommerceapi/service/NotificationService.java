@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class NotificationService {
 
     private final NotificationRepository notificationRepository;
-    private final JavaMailSender mailSender;
+    private final EmailService emailService;
 
     public void createNotification(User user, String message, String type) {
         Notification notification = Notification.builder()
@@ -29,31 +29,10 @@ public class NotificationService {
                 .wasSent(false)
                 .build();
 
+        boolean sent = emailService.sendEmail(user.getEmail(), "Notificación de la plataforma: " + type, message);
+        if (sent) notification.setWasSent(true);
+
         notificationRepository.save(notification);
-
-        try {
-            SimpleMailMessage email = new SimpleMailMessage();
-            email.setTo(user.getEmail());
-            email.setSubject("Notificación de la plataforma");
-            email.setText(message);
-            mailSender.send(email);
-
-            notification.setWasSent(true);
-            notificationRepository.save(notification);
-        } catch (Exception e) {
-            System.err.println("Error enviando correo: " + e.getMessage());
-        }
-    }
-    public void sendMail() {
-        try {
-            SimpleMailMessage email = new SimpleMailMessage();
-            email.setTo("donavintzunun201930708@cunoc.edu.gt");
-            email.setSubject("Notificación de la plataforma");
-            email.setText("mensaje de prueba");
-            mailSender.send(email);
-        } catch (Exception e) {
-            System.err.println("Error enviando correo: " + e.getMessage());
-        }
     }
 
     public List<NotificationResDto> findAll() {

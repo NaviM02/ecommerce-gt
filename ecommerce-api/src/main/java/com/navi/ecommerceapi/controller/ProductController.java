@@ -3,7 +3,7 @@ package com.navi.ecommerceapi.controller;
 import com.navi.ecommerceapi.dto.ProductDetailDto;
 import com.navi.ecommerceapi.dto.ProductListDto;
 import com.navi.ecommerceapi.model.Product;
-import com.navi.ecommerceapi.service.NotificationService;
+import com.navi.ecommerceapi.service.EmailService;
 import com.navi.ecommerceapi.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -46,7 +46,7 @@ public class ProductController {
     }
 
     @PutMapping(value ="/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<Product> update(
+    public ResponseEntity<ProductDetailDto> update(
             @PathVariable Long id,
             @RequestPart("product") Product product,
             @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
@@ -57,12 +57,5 @@ public class ProductController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         productService.delete(id);
         return ResponseEntity.noContent().build();
-    }
-    private final NotificationService notificationService;
-
-    @GetMapping("emails")
-    public ResponseEntity<Void> findByEmail() {
-        notificationService.sendMail();
-        return ResponseEntity.ok().build();
     }
 }

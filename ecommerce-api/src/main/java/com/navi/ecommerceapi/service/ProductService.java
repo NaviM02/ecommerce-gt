@@ -118,7 +118,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Product update(Long id, Product newProduct, MultipartFile image) throws IOException {
+    public ProductDetailDto update(Long id, Product newProduct, MultipartFile image) throws IOException {
         if (!id.equals(newProduct.getProductId())) throw new DomainException("Bad product id");
         if (newProduct.getCategories() == null || newProduct.getCategories().isEmpty()) throw new DomainException("Product must have at least one category");
         if (image != null && !image.isEmpty()) newProduct.setImageUrl(getImageUrl(image));
@@ -137,7 +137,23 @@ public class ProductService {
         }
 
         if (notify) notificationService.createNotification(seller, msg, "PRODUCTO");
-        return productRepository.save(newProduct);
+
+        Product product = productRepository.save(newProduct);
+
+        return ProductDetailDto.builder()
+                .productId(product.getProductId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .imageUrl(product.getImageUrl())
+                .price(product.getPrice())
+                .stock(product.getStock())
+                .condition(product.getCondition())
+                .status(product.getStatus())
+                .createdAt(product.getCreatedAt())
+                .categories(product.getCategories())
+                .sellerName(product.getSeller().getFullName())
+                .sellerId(product.getSeller().getUserId())
+                .build();
     }
 
     public void delete(Long id) {

@@ -23,6 +23,14 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public List<User> findUsersByRoles(List<Long> roleIds) {
+        return userRepository.findByRoleRoleIdIn(roleIds);
+    }
+
+    public List<User> findUsersExcludingRole(Long excludedRoleId) {
+        return userRepository.findByRoleRoleIdNot(excludedRoleId);
+    }
+
     public User findById(Long id) {
         User user = userRepository.findById(id).orElse(null);
         if (user == null) throw new EntityNotFoundException("User not found");
