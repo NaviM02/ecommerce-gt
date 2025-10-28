@@ -11,19 +11,23 @@ import { environment } from '../../../../../../environments/environment';
 import { ProductStatus } from '../../../../../models/product-status.enum';
 import { ProductCondition } from '../../../../../models/product-condition.enum';
 import { StatusProductBadgeComponent } from '../../../../../commons/components/status-product-badge/status-product-badge.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-my-product-list',
   imports: [
     ListPageHeaderComponent,
     TableRowActionComponent,
-    StatusProductBadgeComponent
+    StatusProductBadgeComponent,
+    FormsModule
   ],
   templateUrl: './my-product-list.component.html',
   styleUrl: './my-product-list.component.scss'
 })
 export class MyProductListComponent implements OnInit {
     products: Product[] = [];
+    filteredProducts: Product[] = [];
+    searchTerm: string = '';
 
     constructor(
       private productService: ProductService,
@@ -44,17 +48,17 @@ export class MyProductListComponent implements OnInit {
     this.productService.findByUserId(userId).subscribe({
       next: data => {
         this.products = data;
-        console.log(this.products);
+        this.filteredProducts = data;
       },
       error: () => this.toastService.error('Error del servidor')
     });
   }
 
   @confirmAction({
-    title: 'txt_delete_product',
-    bodyQuestion: 'txt_confirm_really_want_delete_product',
-    bodyText: 'txt_irreversible_action',
-    confirmText: 'txt_understand_delete'
+    title: 'Eliminar producto',
+    bodyQuestion: '¿Enserio quieres eliminar este producto?',
+    bodyText: 'Esta acción es irreversible',
+    confirmText: 'Eliminar'
   })
   delete(id: number) {
     this.productService.delete(id).subscribe({
@@ -66,28 +70,11 @@ export class MyProductListComponent implements OnInit {
     });
   }
 
-  getStatusLabel(status: number): string {
-    switch (status) {
-      case ProductStatus.PENDING:
-        return 'Pendiente';
-      case ProductStatus.APPROVED:
-        return 'Aprobado';
-      case ProductStatus.REJECTED:
-        return 'Rechazado';
-      default:
-        return 'Desconocido';
-    }
-  }
-
-  getConditionLabel(condition: number): string {
-    switch (condition) {
-      case ProductCondition.NEW:
-        return 'Nuevo';
-      case ProductCondition.USED:
-        return 'Usado';
-      default:
-        return 'Desconocido';
-    }
+  onSearchChange(): void {
+    const term = this.searchTerm.toLowerCase().trim();
+    this.filteredProducts = this.products.filter(p =>
+      p.name.toLowerCase().includes(term)
+    );
   }
 
   protected readonly environment = environment;

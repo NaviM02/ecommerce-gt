@@ -1,8 +1,18 @@
 <div class="container mt-4">
   <h2 class="mb-4 fw-semibold">Productos disponibles</h2>
 
+  <div class="mb-3 ">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Buscar por nombre..."
+      [(ngModel)]="searchTerm"
+      (input)="onSearchChange()"
+    />
+  </div>
+
   <div class="row g-4">
-    @for (product of products; track product.productId) {
+    @for (product of filteredProducts; track product.productId) {
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
         <app-product-card [product]="product"></app-product-card>
       </div>

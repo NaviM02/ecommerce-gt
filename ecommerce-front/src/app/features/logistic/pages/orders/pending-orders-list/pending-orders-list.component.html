@@ -10,6 +10,20 @@
 
     <div class="body bg-white h-100">
       <div class="table-main-container d-flex flex-column gap-3 h-60">
+
+        <div class="table-actions d-flex align-items-center gap-3">
+          <label class="fw-bold mb-0">Filtrar por estado:</label>
+          <select
+            class="form-select w-auto"
+            [(ngModel)]="selectedStatus"
+            (change)="onStatusChange()"
+          >
+            <option value="ALL">Todos</option>
+            <option value="COMING">En curso</option>
+            <option value="COMPLETED">Entregados</option>
+          </select>
+        </div>
+
         <div class="table-container">
           <table class="table sticky-header sticky-actions">
             <tr>
@@ -21,7 +35,7 @@
               <th class="text-center">Acciones</th>
             </tr>
 
-            @for (order of orders; track order.orderId) {
+            @for (order of filteredOrders; track order.orderId) {
               <tr>
                 <td>{{ order.orderId }}</td>
                 <td>{{ order.username }}</td>

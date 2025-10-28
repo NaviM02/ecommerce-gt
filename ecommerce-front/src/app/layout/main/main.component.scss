@@ -1,10 +1,12 @@
 .app-content {
   display: flex;
-  height: 100%;
+  height: calc(100vh - 60px); // 60px si tu header mide eso, ajusta según tu caso
   position: relative;
-  grid-area: content;
+  overflow: hidden; // evita que el contenido desborde visualmente
 
   .content-container {
     flex-grow: 1;
+    overflow-y: auto;
+    height: 100%;
   }
 }

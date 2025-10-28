@@ -21,7 +21,6 @@ import { confirmAction } from '../../../../../commons/decorators/confirm.decorat
   styleUrl: './user-profile.component.scss'
 })
 export class UserProfileComponent implements OnInit{
-  id!: number | null;
   user: User = new User();
   userStatus: boolean = true;
 

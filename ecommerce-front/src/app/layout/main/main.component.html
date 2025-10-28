@@ -1,6 +1,6 @@
 <div class="d-flex flex-column vh-100">
   <app-header (toggleSidebar)="sidebarStatus = !sidebarStatus"></app-header>
-  <div class="app-content position-relative h-100">
+  <div class="app-content">
     <app-sidebar [active]="sidebarStatus"></app-sidebar>
     <div class="content-container">
       <router-outlet></router-outlet>

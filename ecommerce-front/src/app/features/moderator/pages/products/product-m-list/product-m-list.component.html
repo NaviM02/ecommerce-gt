@@ -10,7 +10,15 @@
 
     <div class="body bg-white h-100">
       <div class="table-main-container d-flex flex-column gap-3 h-60">
-        <div class="table-actions"></div>
+        <div class="table-actions">
+          <input
+            type="text"
+            class="form-control w-auto"
+            placeholder="Buscar producto..."
+            [(ngModel)]="searchTerm"
+            (input)="onSearchChange()"
+          />
+        </div>
 
         <div class="table-container">
           <table class="table sticky-header sticky-actions">
@@ -24,7 +32,7 @@
               <th class="th-actions text-center">{{ 'Acciones' }}</th>
             </tr>
 
-            @for (product of products; track product.productId) {
+            @for (product of filteredProducts; track product.productId) {
               <tr>
                 <td>
                   <img
