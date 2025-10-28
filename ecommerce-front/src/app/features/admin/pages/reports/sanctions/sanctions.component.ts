@@ -3,14 +3,13 @@ import { Sanction } from '../../../../../models/model';
 import { SanctionService } from '../../../../../services/core/sanction.service';
 import { ToastService } from '../../../../../services/other/toast.service';
 import { ListPageHeaderComponent } from '../../../../../commons/components/list-page-header/list-page-header.component';
-import { DatePipe, NgClass, TitleCasePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-sanctions',
   imports: [
     ListPageHeaderComponent,
     DatePipe,
-    NgClass,
     TitleCasePipe
   ],
   templateUrl: './sanctions.component.html',

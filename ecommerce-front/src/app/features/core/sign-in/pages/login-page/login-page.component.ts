@@ -48,6 +48,7 @@ export class LoginPageComponent {
       error: (e: HttpErrorResponse) => {
         if (e.error.error == 'wrong_credentials') return this.toastService.error('Usuario o contraseña incorrectos');
         if (e.error.error == 'inactive_user') return this.toastService.error('Usuario inactivo');
+        if (e.error.error == 'user_sanctioned') return this.toastService.error('Usuario sancionado');
         this.toastService.error('Error en el servidor, intenta más tarde');
       }
     });
