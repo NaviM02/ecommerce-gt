@@ -1,0 +1,1 @@
+import"./chunk-PYEHUVGI.js";var t=[{path:"orders",children:[{path:"",loadComponent:()=>import("./chunk-7HYYUC2U.js").then(o=>o.PendingOrdersListComponent)},{path:":id",loadComponent:()=>import("./chunk-ZCPKWFPC.js").then(o=>o.PendingOrderDetailComponent)}]}];export{t as logisticRoutes};

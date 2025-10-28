@@ -1,0 +1,1 @@
+import"./chunk-PYEHUVGI.js";var t=[{path:"login",loadComponent:()=>import("./chunk-S37772IB.js").then(o=>o.LoginPageComponent)},{path:"signup",loadComponent:()=>import("./chunk-YVK2LKBJ.js").then(o=>o.CreateAccountPageComponent)}];export{t as signInRoutes};

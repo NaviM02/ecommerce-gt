@@ -119,7 +119,7 @@ INSERT INTO "user" (full_name, username, email, phone, password, role_id) VALUES
 -- password: 123
 INSERT INTO "user" (full_name, username, email, phone, password, role_id) VALUES
 ('Juan Pérez', 'juan.perez', 'juan.perez@mail.com', '555-1001', '$2a$11$kich2N0hk.Wv32YCvBTsHu0Yy2ENbxaLzfB20KXxow.16RE1bQalm', 2),
-('María Gómez', 'maria.gomez', 'maria.gomez@mail.com', '555-1002', '$2a$11$kich2N0hk.Wv32YCvBTsHu0Yy2ENbxaLzfB20KXxow.16RE1bQalm', 2),
+('Dónavin Tzunún', 'dtzunun', 'donavintzunun201930708@cunoc.edu.gt', '3981-0549', '$2a$11$kich2N0hk.Wv32YCvBTsHu0Yy2ENbxaLzfB20KXxow.16RE1bQalm', 2),
 ('Carlos Ramírez', 'carlos.ramirez', 'carlos.ramirez@mail.com', '555-1003', '$2a$11$kich2N0hk.Wv32YCvBTsHu0Yy2ENbxaLzfB20KXxow.16RE1bQalm', 2),
 ('Ana López', 'ana.lopez', 'ana.lopez@mail.com', '555-1004', '$2a$11$kich2N0hk.Wv32YCvBTsHu0Yy2ENbxaLzfB20KXxow.16RE1bQalm', 2),
 ('Pedro Hernández', 'pedro.hernandez', 'pedro.hernandez@mail.com', '555-1005', '$2a$11$kich2N0hk.Wv32YCvBTsHu0Yy2ENbxaLzfB20KXxow.16RE1bQalm', 2),
@@ -170,7 +170,7 @@ INSERT INTO product (seller_id, name, description, image_url, price, stock, cond
 INSERT INTO product_category (product_id, category_id) VALUES
 (1, 3), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3), (8, 3), (9, 3), (10, 3);
 
--- Usuario 3: María Gómez
+-- Usuario 3: Dónavin Tzunún
 INSERT INTO product (seller_id, name, description, image_url, price, stock, condition, status) VALUES
 (3, 'Smartphone Galaxy X', 'Pantalla AMOLED y cámara triple.', '/uploads/products/smartphone_galaxyx.jpg', 4999.99, 10, 1, 2),
 (3, 'Laptop HP Pavilion', 'Laptop con Intel i5 y 8GB RAM.', '/uploads/products/laptop_hp_pavilion.jpg', 5699.99, 8, 1, 2),
@@ -380,3 +380,73 @@ INSERT INTO product_category (product_id, category_id) VALUES
 (98, 10), (98, 7), 
 (99, 10),
 (100, 10);
+
+
+-- VALORACIONES (rating)
+INSERT INTO rating (product_id, user_id, stars, comment, created_at) VALUES
+-- Productos de Juan Pérez (usuario 2)
+(1, 5, 5, 'La camisa tiene excelente calidad y llegó en buen estado.', NOW() - INTERVAL '10 days'),
+(4, 6, 4, 'La chaqueta se ve bien, aunque el color es un poco diferente al de la foto.', NOW() - INTERVAL '8 days'),
+(9, 3, 5, 'El reloj funciona perfecto y se siente resistente.', NOW() - INTERVAL '6 days'),
+
+-- Productos de Dónavin Tzunún (usuario 3)
+(11, 2, 5, 'El celular es rápido y la cámara me sorprendió.', NOW() - INTERVAL '7 days'),
+(13, 4, 4, 'Muy buena tablet, aunque la batería podría durar más.', NOW() - INTERVAL '5 days'),
+(18, 8, 5, 'Excelente smartwatch, cómodo y preciso.', NOW() - INTERVAL '2 days'),
+
+-- Productos de Carlos Ramírez (usuario 4)
+(21, 7, 5, 'La licuadora tiene buena potencia, ideal para smoothies.', NOW() - INTERVAL '9 days'),
+(27, 3, 5, 'La freidora sin aceite es una maravilla, cocino todo ahí.', NOW() - INTERVAL '3 days'),
+(30, 9, 4, 'La sandwichera funciona bien, aunque tarda un poco en calentar.', NOW() - INTERVAL '1 day'),
+
+-- Productos de Ana López (usuario 5)
+(31, 6, 5, 'La secadora seca muy rápido y sin dañar el cabello.', NOW() - INTERVAL '11 days'),
+(34, 4, 5, 'Las ollas Tramontina son de excelente calidad.', NOW() - INTERVAL '8 days'),
+(38, 2, 4, 'El perfume huele muy bien pero el empaque llegó un poco golpeado.', NOW() - INTERVAL '4 days'),
+
+-- Productos de Pedro Hernández (usuario 6)
+(41, 8, 5, 'La PS5 llegó perfecta, muy satisfecho.', NOW() - INTERVAL '10 days'),
+(44, 3, 5, 'El monitor LG tiene una calidad de imagen impresionante.', NOW() - INTERVAL '7 days'),
+(48, 7, 5, 'La silla gamer es cómoda y se siente muy resistente.', NOW() - INTERVAL '3 days'),
+
+-- Productos de Lucía Martínez (usuario 7)
+(51, 2, 5, 'La aspiradora limpia genial, vale cada centavo.', NOW() - INTERVAL '9 days'),
+(54, 5, 4, 'El cojín es suave y el color combina con mi sala.', NOW() - INTERVAL '6 days'),
+(57, 6, 5, 'El bolso es hermoso, cuero auténtico.', NOW() - INTERVAL '2 days'),
+
+-- Productos de Diego Sánchez (usuario 8)
+(61, 4, 5, 'El smartwatch es excelente para entrenar.', NOW() - INTERVAL '8 days'),
+(64, 2, 5, 'La proteína tiene buen sabor y se disuelve rápido.', NOW() - INTERVAL '4 days'),
+(68, 5, 4, 'La mochila es bonita y espaciosa, pero algo cara.', NOW() - INTERVAL '1 day');
+
+
+
+INSERT INTO sanction (user_id, moderator_id, reason, start_date, end_date, status) VALUES
+(3, 1, 'Incumplimiento de envío en los tiempos establecidos.', 
+ NOW() - INTERVAL '40 days', NOW() - INTERVAL '25 days', 'LEVANTADA'),
+
+(4, 1, 'Publicación de productos duplicados.', 
+ NOW() - INTERVAL '35 days', NOW() - INTERVAL '20 days', 'LEVANTADA'),
+
+(5, 2, 'Uso inadecuado del sistema de mensajes con otros usuarios.', 
+ NOW() - INTERVAL '30 days', NOW() - INTERVAL '15 days', 'LEVANTADA'),
+
+(6, 1, 'Venta de artículos con descripciones engañosas.', 
+ NOW() - INTERVAL '28 days', NOW() - INTERVAL '10 days', 'LEVANTADA'),
+
+(7, 2, 'Incumplimiento de políticas de reembolso.', 
+ NOW() - INTERVAL '22 days', NOW() - INTERVAL '8 days', 'LEVANTADA'),
+
+(8, 1, 'Falta de respuesta reiterada ante reclamos.', 
+ NOW() - INTERVAL '18 days', NOW() - INTERVAL '5 days', 'LEVANTADA'),
+
+(9, 2, 'Comentarios ofensivos hacia otros vendedores.', 
+ NOW() - INTERVAL '14 days', NOW() - INTERVAL '3 days', 'LEVANTADA'),
+
+(10, 1, 'Intento de manipulación de valoraciones mediante cuentas asociadas.', 
+ NOW() - INTERVAL '12 days', NOW() - INTERVAL '2 days', 'LEVANTADA'),
+
+(11, 1, 'Incumplimiento menor de las políticas de entrega.', 
+ NOW() - INTERVAL '10 days', NOW() - INTERVAL '1 days', 'LEVANTADA');
+
+ 

@@ -1,0 +1,1 @@
+import"./chunk-PYEHUVGI.js";var t=[{path:"products",children:[{path:"",loadComponent:()=>import("./chunk-SSRXBVW2.js").then(o=>o.ProductMListComponent)},{path:":id",loadComponent:()=>import("./chunk-S76YSP3L.js").then(o=>o.ProductMDetailComponent)}]}];export{t as moderatorRoutes};

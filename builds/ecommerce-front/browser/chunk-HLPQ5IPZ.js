@@ -1,0 +1,1 @@
+import"./chunk-PYEHUVGI.js";var t=[{path:"",loadComponent:()=>import("./chunk-XDH56GDY.js").then(o=>o.UserProfileComponent)},{path:"edit",loadComponent:()=>import("./chunk-XDA3IQJC.js").then(o=>o.UserProfileEditComponent)}];export{t as profileRoutes};

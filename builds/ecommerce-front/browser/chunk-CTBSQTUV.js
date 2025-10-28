@@ -1,0 +1,2 @@
+import{Cb as s,Eb as p,Ga as t,Pa as a,ib as i,jb as o}from"./chunk-DN3HB7UR.js";var c=class n{message="Campo obligatorio";static \u0275fac=function(e){return new(e||n)};static \u0275cmp=a({type:n,selectors:[["app-input-invalid-feedback"]],inputs:{message:"message"},decls:2,vars:1,consts:[[1,"invalid-feedback"]],template:function(e,d){e&1&&(i(0,"div",0),s(1),o()),e&2&&(t(),p(" ",d.message,`
+`))},encapsulation:2})};export{c as a};
