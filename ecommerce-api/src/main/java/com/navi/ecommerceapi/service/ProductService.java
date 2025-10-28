@@ -6,7 +6,6 @@ import com.navi.ecommerceapi.dto.RatingResDto;
 import com.navi.ecommerceapi.exception.DomainException;
 import com.navi.ecommerceapi.model.Product;
 import com.navi.ecommerceapi.model.User;
-import com.navi.ecommerceapi.repository.CategoryRepository;
 import com.navi.ecommerceapi.repository.ProductRepository;
 import com.navi.ecommerceapi.exception.EntityNotFoundException;
 import com.navi.ecommerceapi.repository.RatingRepository;
@@ -36,7 +35,7 @@ public class ProductService {
 
     public List<ProductListDto> findAll(Integer status) {
         List<Product> products = (status != null)
-                ? productRepository.findAllByStatus(status)
+                ? productRepository.findAllByStatusOrderByProductId(status)
                 : productRepository.findAll();
 
         return products.stream()
@@ -88,7 +87,7 @@ public class ProductService {
     }
 
     public List<ProductListDto> findAllByUserId(Long id) {
-        List<Product> products = productRepository.findBySellerUserId(id);
+        List<Product> products = productRepository.findBySellerUserIdOrderByProductId(id);
 
         return products.stream()
                 .map(p -> ProductListDto.builder()

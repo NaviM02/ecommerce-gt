@@ -1,6 +1,7 @@
 package com.navi.ecommerceapi.service;
 
 import com.navi.ecommerceapi.exception.DomainException;
+import com.navi.ecommerceapi.exception.EntityAlreadyExistsException;
 import com.navi.ecommerceapi.exception.EntityNotFoundException;
 import com.navi.ecommerceapi.model.User;
 import com.navi.ecommerceapi.repository.UserRepository;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,11 +24,11 @@ public class UserService {
     }
 
     public List<User> findUsersByRoles(List<Long> roleIds) {
-        return userRepository.findByRoleRoleIdIn(roleIds);
+        return userRepository.findByRoleRoleIdInOrderByUserIdAsc(roleIds);
     }
 
     public List<User> findUsersExcludingRole(Long excludedRoleId) {
-        return userRepository.findByRoleRoleIdNot(excludedRoleId);
+        return userRepository.findByRoleRoleIdNotOrderByUserIdAsc(excludedRoleId);
     }
 
     public User findById(Long id) {
@@ -38,6 +38,10 @@ public class UserService {
     }
 
     public User save(User user) {
+        User existing = userRepository.findByUsername(user.getUsername()).orElse(null);
+        if (existing != null) throw new EntityAlreadyExistsException("Cambiar nombre de usuario");
+        existing = userRepository.findByEmail(user.getEmail()).orElse(null);
+        if (existing != null) throw new EntityAlreadyExistsException("Cambiar email");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRegistrationDate(LocalDateTime.now());
         return userRepository.save(user);
@@ -58,8 +62,8 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public Optional<User> findUserByEmail(String email){
-        return userRepository.findByEmail(email);
+    public User findUserByEmail(String email){
+        return userRepository.findByEmail(email).orElse(null);
     }
 
     public List<User> findUsersByRole(Long roleId) {

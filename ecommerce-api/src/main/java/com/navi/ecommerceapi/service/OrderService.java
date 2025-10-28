@@ -33,11 +33,11 @@ public class OrderService {
     private final NotificationService notificationService;
 
     public List<OrderListResDto> findAll() {
-        return orderRepository.findAll().stream().map(orderMapper::toListDto).collect(Collectors.toList());
+        return orderRepository.findAllByOrderByOrderIdAsc().stream().map(orderMapper::toListDto).collect(Collectors.toList());
     }
 
     public List<OrderListResDto> findAllByUserId(Long userId) {
-        return orderRepository.findByUserUserId(userId).stream().map(orderMapper::toListDto).collect(Collectors.toList());
+        return orderRepository.findByUserUserIdOrderByOrderIdAsc(userId).stream().map(orderMapper::toListDto).collect(Collectors.toList());
     }
 
     public OrderResDto findById(Long id) {

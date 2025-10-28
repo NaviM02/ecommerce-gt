@@ -30,7 +30,7 @@ public class AuthService {
 
     public String login(UserCredentialDto credentials) {
         User user = userService.findByUsername(credentials.getUsername());
-
+        if (user == null) user = userService.findUserByEmail(credentials.getUsername());
         if (user == null) throw new InvalidCredentialsException("wrong_credentials");
         if (!user.getActive()) throw new DomainException("inactive_user");
         if (!passwordEncoder.matches(credentials.getPassword(), user.getPassword())) throw new InvalidCredentialsException("wrong_credentials");
